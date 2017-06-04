@@ -57,7 +57,7 @@ create table Matches (
    score int,
    saved tinyint,
    archived tinyint,
-   notes varchar(126)
+   notes varchar(126),
    constraint FKMatches_newPerson foreign key (newPerson) references User(id)
    on delete cascade,
    constraint FKMatches_oldPerson foreign key (oldPerson) references HobbyEnum(id)
