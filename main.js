@@ -3,9 +3,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 
 var bodyParser = require('body-parser');
-//var Session = require('./Routes/Session.js');
-//var Validator = require('./Routes/Validator.js');
-//var CnnPool = require('./Routes/CnnPool.js');
+var Session = require('./Routes/Session.js');
+var Validator = require('./Routes/Validator.js');
+var CnnPool = require('./Routes/CnnPool.js');
 
 var async = require('async');
 
