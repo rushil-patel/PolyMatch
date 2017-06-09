@@ -41,7 +41,7 @@ app.use(CnnPool.router);
 
 // Load all subroutes
 app.use('/Users', require('./Routes/Account/User.js'));
-//app.use('/Ssns', require('./Routes/Account/Ssns.js'));
+app.use('/Ssns', require('./Routes/Account/Ssns.js'));
 //app.use('/Prefs', require('./Routes/Preferences/Prefs.js'));
 //app.use('/Hobbies', require('./Routes/Hobbies/Hobbies.js'));
 //app.user('/Matches', require(./Routes/Matches/Matches.js));

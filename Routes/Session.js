@@ -4,7 +4,7 @@ var crypto = require('crypto');
 
 var sessions = {};          // All currently logged-in Sessions
 var duration = 7200000;     // Two hours in milliseconds
-var cookieName = 'CHSAuth'; // Cookie key for authentication tokens
+var cookieName = 'PMAuth'; // Cookie key for authentication tokens
 
 // Session-constructed objects represent an ongoing login session, including
 // user details, login time, and time of last use, the latter for the purpose
