@@ -63,3 +63,13 @@ create table Matches (
    constraint FKMatches_oldPerson foreign key (oldPerson) references User(id)
    on delete cascade
 );
+
+create table Majors (
+   id int auto_increment primary key,
+   name varchar(50)
+);
+
+create table Dorms (
+   id int auto_increment primary key,
+   name varchar(25)
+);
