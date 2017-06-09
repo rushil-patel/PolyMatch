@@ -21,14 +21,14 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Set up Session on req if available
-//app.use(Session.router);
+app.use(Session.router);
 
 // Check general login.  If OK, add Validator to |req| and continue processing,
 // otherwise respond immediately with 401 and noLogin error tag.
 app.use(function(req, res, next) {
    console.log(req.method + " : " + req.path);
    if (req.session || (req.method === 'POST' &&
-    (req.path === '/Prss' || req.path === '/Ssns'))) {
+    (req.path === '/Users' || req.path === '/Ssns'))) {
       req.validator = new Validator(req, res);
       next();
    }
@@ -37,10 +37,10 @@ app.use(function(req, res, next) {
 });
 
 // Add DB connection, with smart chkQry method, to |req|
-//app.use(CnnPool.router);
+app.use(CnnPool.router);
 
 // Load all subroutes
-//app.use('/User', require('./Routes/Account/User.js'));
+app.use('/Users', require('./Routes/Account/User.js'));
 //app.use('/Ssns', require('./Routes/Account/Ssns.js'));
 //app.use('/Prefs', require('./Routes/Preferences/Prefs.js'));
 //app.use('/Hobbies', require('./Routes/Hobbies/Hobbies.js'));
