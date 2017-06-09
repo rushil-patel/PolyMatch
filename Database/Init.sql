@@ -1,6 +1,6 @@
-drop database if exists polymatch;
-create database polymatch;
-use sshaul;
+drop database if exists CHANGE;
+create database CHANGE;
+use CHANGE;
 
 create table User (
    id int auto_increment primary key,
@@ -60,6 +60,6 @@ create table Matches (
    notes varchar(126),
    constraint FKMatches_newPerson foreign key (newPerson) references User(id)
    on delete cascade,
-   constraint FKMatches_oldPerson foreign key (oldPerson) references HobbyEnum(id)
+   constraint FKMatches_oldPerson foreign key (oldPerson) references User(id)
    on delete cascade
 );
