@@ -16,12 +16,9 @@ Validator.Tags = {
    badLogin: "badLogin",            // Email/password combination invalid
    dupEmail: "dupEmail",            // Email duplicates an existing email
    noTerms: "noTerms",              // Acceptance of terms is required.
-   forbiddenRole: "forbiddenRole",
    forbiddenField: "forbiddenField",  // Cannot set to this role
    noOldPwd: "noOldPwd",            // Change of password requires an old password
    oldPwdMismatch: "oldPwdMismatch",
-   dupTitle: "dupTitle",            // Title duplicates an existing Conversation title
-   dupEnrollment: "dupEnrollment",  // Duplicate enrollment
    queryFailed: "queryFailed"
 };
 
