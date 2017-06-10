@@ -1,248 +1,248 @@
 INSERT
 INTO Majors (name)
-VALUES (Aerospace Engineering);
+VALUES ('Aerospace Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Agricultural Business);
+VALUES ('Agricultural Business');
 
 INSERT
 INTO Majors (name)
-VALUES (Agricultural Communication);
+VALUES ('Agricultural Communication');
 
 INSERT
 INTO Majors (name)
-VALUES (Agricultural and Environmental Plant Sciences);
+VALUES ('Agricultural and Environmental Plant Sciences');
 
 INSERT
 INTO Majors (name)
-VALUES (Agricultural Science);
+VALUES ('Agricultural Science');
 
 INSERT
 INTO Majors (name)
-VALUES (Agricultural Systems Management);
+VALUES ('Agricultural Systems Management');
 
 INSERT
 INTO Majors (name)
-VALUES (Animal Science);
+VALUES ('Animal Science');
 
 INSERT
 INTO Majors (name)
-VALUES (Anthropology and Geography);
+VALUES ('Anthropology and Geography');
 
 INSERT
 INTO Majors (name)
-VALUES (Architectural Engineering);
+VALUES ('Architectural Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Architecture);
+VALUES ('Architecture');
 
 INSERT
 INTO Majors (name)
-VALUES (Art and Design);
+VALUES ('Art and Design');
 
 INSERT
 INTO Majors (name)
-VALUES (Biochemistry);
+VALUES ('Biochemistry');
 
 INSERT
 INTO Majors (name)
-VALUES (Biological Sciences);
+VALUES ('Biological Sciences');
 
 INSERT
 INTO Majors (name)
-VALUES (Biomedical Engineering);
+VALUES ('Biomedical Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (BioResource & Agricultural Engineering);
+VALUES ('BioResource & Agricultural Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Business Administration);
+VALUES ('Business Administration');
 
 INSERT
 INTO Majors (name)
-VALUES (Chemistry);
+VALUES ('Chemistry');
 
 INSERT
 INTO Majors (name)
-VALUES (Child Development);
+VALUES ('Child Development');
 
 INSERT
 INTO Majors (name)
-VALUES (City & Regional Planning);
+VALUES ('City & Regional Planning');
 
 INSERT
 INTO Majors (name)
-VALUES (Civil Engineering);
+VALUES ('Civil Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Comparative Ethnic Studies);
+VALUES ('Comparative Ethnic Studies');
 
 INSERT
 INTO Majors (name)
-VALUES (Communication Studies);
+VALUES ('Communication Studies');
 
 INSERT
 INTO Majors (name)
-VALUES (Computer Engineering);
+VALUES ('Computer Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Computer Science);
+VALUES ('Computer Science');
 
 INSERT
 INTO Majors (name)
-VALUES (Construction Management);
+VALUES ('Construction Management');
 
 INSERT
 INTO Majors (name)
-VALUES (Dairy Science);
+VALUES ('Dairy Science');
 
 INSERT
 INTO Majors (name)
-VALUES (Economics);
+VALUES ('Economics');
 
 INSERT
 INTO Majors (name)
-VALUES (Electrical Engineering);
+VALUES ('Electrical Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (English);
+VALUES ('English');
 
 INSERT
 INTO Majors (name)
-VALUES (Environmental Earth & Soil Sciences);
+VALUES ('Environmental Earth & Soil Sciences');
 
 INSERT
 INTO Majors (name)
-VALUES (Environmental Engineering);
+VALUES ('Environmental Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Environmental Management and Protection);
+VALUES ('Environmental Management and Protection');
 
 INSERT
 INTO Majors (name)
-VALUES (Food Science);
+VALUES ('Food Science');
 
 INSERT
 INTO Majors (name)
-VALUES (Forestry and Natural Resources);
+VALUES ('Forestry and Natural Resources');
 
 INSERT
 INTO Majors (name)
-VALUES (General Engineering);
+VALUES ('General Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Graphic Communication);
+VALUES ('Graphic Communication');
 
 INSERT
 INTO Majors (name)
-VALUES (History);
+VALUES ('History');
 
 INSERT
 INTO Majors (name)
-VALUES (Industrial Engineering);
+VALUES ('Industrial Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Industrial Technology & Packaging);
+VALUES ('Industrial Technology & Packaging');
 
 INSERT
 INTO Majors (name)
-VALUES (Journalism);
+VALUES ('Journalism');
 
 INSERT
 INTO Majors (name)
-VALUES (Kinesiology);
+VALUES ('Kinesiology');
 
 INSERT
 INTO Majors (name)
-VALUES (Landscape Architecture);
+VALUES ('Landscape Architecture');
 
 INSERT
 INTO Majors (name)
-VALUES (Liberal Studies);
+VALUES ('Liberal Studies');
 
 INSERT
 INTO Majors (name)
-VALUES (Manufacturing Engineering);
+VALUES ('Manufacturing Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Marine Sciences);
+VALUES ('Marine Sciences');
 
 INSERT
 INTO Majors (name)
-VALUES (Materials Engineering);
+VALUES ('Materials Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Mathematics);
+VALUES ('Mathematics');
 
 INSERT
 INTO Majors (name)
-VALUES (Mechanical Engineering);
+VALUES ('Mechanical Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Microbiology);
+VALUES ('Microbiology');
 
 INSERT
 INTO Majors (name)
-VALUES (Modern Languages & Literatures);
+VALUES ('Modern Languages & Literatures');
 
 INSERT
 INTO Majors (name)
-VALUES (Music);
+VALUES ('Music');
 
 INSERT
 INTO Majors (name)
-VALUES (Nutrition);
+VALUES ('Nutrition');
 
 INSERT
 INTO Majors (name)
-VALUES (Philosophy);
+VALUES ('Philosophy');
 
 INSERT
 INTO Majors (name)
-VALUES (Physics	Link);
+VALUES ('Physics	Link');
 
 INSERT
 INTO Majors (name)
-VALUES (Political Science);
+VALUES ('Political Science');
 
 INSERT
 INTO Majors (name)
-VALUES (Psychology);
+VALUES ('Psychology');
 
 INSERT
 INTO Majors (name)
-VALUES (Recreation, Parks, and Tourism Administration);
+VALUES ('Recreation, Parks, and Tourism Administration');
 
 INSERT
 INTO Majors (name)
-VALUES (Sociology);
+VALUES ('Sociology');
 
 INSERT
 INTO Majors (name)
-VALUES (Software Engineering);
+VALUES ('Software Engineering');
 
 INSERT
 INTO Majors (name)
-VALUES (Statistics);
+VALUES ('Statistics');
 
 INSERT
 INTO Majors (name)
-VALUES (Theatre Arts);
+VALUES ('Theatre Arts');
 
 INSERT
 INTO Majors (name)
-VALUES (Wine & Viticulture);
+VALUES ('Wine & Viticulture');
 
