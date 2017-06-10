@@ -44,7 +44,7 @@ app.use('/Users', require('./Routes/Account/User.js'));
 app.use('/Ssns', require('./Routes/Account/Ssns.js'));
 app.use('/Majors', require('./Routes/Enums/Majors.js'));
 //app.use('/Prefs', require('./Routes/Preferences/Prefs.js'));
-//app.use('/Hobbies', require('./Routes/Hobbies/Hobbies.js'));
+app.use('/Hobbies', require('./Routes/Enums/Hobbies.js'));
 //app.user('/Matches', require(./Routes/Matches/Matches.js));
 
 // Special debugging route for /DB DELETE.  Clears all table contents,

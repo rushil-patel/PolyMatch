@@ -15,6 +15,7 @@ Validator.Tags = {
    notFound: "notFound",            // Entity not present in DB
    badLogin: "badLogin",            // Email/password combination invalid
    dupEmail: "dupEmail",            // Email duplicates an existing email
+   dupHobby: "dupHobby",
    noTerms: "noTerms",              // Acceptance of terms is required.
    forbiddenField: "forbiddenField",  // Cannot set to this role
    noOldPwd: "noOldPwd",            // Change of password requires an old password
