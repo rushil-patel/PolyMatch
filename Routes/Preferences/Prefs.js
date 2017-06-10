@@ -41,7 +41,11 @@ router.post('/:usrId/Prefs', function(req, res) {
 
    async.waterfall([
    function(cb) {
-      if (vld.checkPrsOK(user, cb) && vld.hasFields(body, requiredFields, cb) &&
+      if (vld.checkPrsOK(user, cb))
+         cnn.chkQry('select * from Preferences P where P.userId = ?', [user], cb);
+   },
+   function(prefs, fields, cb) {
+      if (vld.check(!prefs.length, Tags.alreadyExists, null, cb) && vld.hasFields(body, requiredFields, cb) &&
        vld.chain(body.wakeTime < 24 && body.wakeTime > -1, Tags.badValue, ["wakeTime"])
        .chain(body.sleepTime < 24 && body.wakeTime > -1, Tags.badValue, ["sleepTime"])
        .check(body.gradesRatio < 101 && body.gradesRatio > -1, Tags.badValue, ["gradesRatio"], cb)) {

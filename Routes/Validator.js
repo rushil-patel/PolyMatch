@@ -20,7 +20,8 @@ Validator.Tags = {
    forbiddenField: "forbiddenField",  // Cannot set to this role
    noOldPwd: "noOldPwd",            // Change of password requires an old password
    oldPwdMismatch: "oldPwdMismatch",
-   queryFailed: "queryFailed"
+   queryFailed: "queryFailed",
+   alreadyExists: "alreadyExists"
 };
 
 // Check |test|.  If false, add an error with tag and possibly empty array
