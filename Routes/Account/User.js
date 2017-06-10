@@ -6,6 +6,8 @@ var mysql = require('mysql');
 var cnnConfig = require('../connection.json');
 router.baseURL = '/Users';
 
+router.use('/', require('../Matches/Matches.js'));
+
 router.post("/", function(req, res) {
 
    var vld = req.validator;

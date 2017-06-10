@@ -2,6 +2,7 @@ var Express = require('express');
 var CnnPool = require('../CnnPool.js');
 var Tags = require('../Validator.js').Tags;
 var ssnUtil = require('../Session.js');
+var adminLogin = ssnUtil.adminLogin;
 var router = Express.Router({caseSensitive: true});
 
 router.baseURL = '/Ssns';
@@ -22,16 +23,25 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res) {
    var cookie;
    var cnn = req.cnn;
+   var vld = req.validator;
 
-   cnn.query('select * from User where email = ?', [req.body.email],
-   function(err, result, fields) {
-      if (req.validator.check(result.length && result[0].password ===
-       req.body.password, Tags.badLogin)) {
-         cookie = ssnUtil.makeSession(result[0], res);
-         res.location(router.baseURL + '/' + cookie).status(200).end();
-      }
+   if (req.body.email === adminLogin.email && 
+    req.body.password === adminLogin.password) {
+      cookie = ssnUtil.makeSession(adminLogin, res);
+      res.location(router.baseURL + '/' + cookie).status(200).end();
       cnn.release();
-   });
+   }
+   else {
+    cnn.query('select * from User where email = ?', [req.body.email],
+     function(err, result, fields) {
+        if (req.validator.check(result.length && result[0].password ===
+         req.body.password, Tags.badLogin)) {
+           cookie = ssnUtil.makeSession(result[0], res);
+           res.location(router.baseURL + '/' + cookie).status(200).end();
+        }
+        cnn.release();
+     });
+  }
 });
 
 router.delete('/:cookie', function(req, res, next) {

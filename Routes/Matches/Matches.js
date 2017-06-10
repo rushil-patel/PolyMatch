@@ -4,17 +4,12 @@ var router = Express.Router({caseSensitive: true});
 var async = require('async');
 var mysql = require('mysql');
 
-router.baseURL = '/User/:usrId/Matches';
-
-router.get('/', function(req, res) {
+router.get('/:usrId/Matches', function(req, res) {
 	var query = req.query;
 	var keys = Object.keys(query);
 	var usrId = req.params.usrId;
 	var vld = req.validator;
 	var cnn = req.cnn;
-
-	console.log('getting!');
-	console.log('usrid: ' + usrId);
 
 	async.waterfall([
 	function(cb) {
@@ -24,18 +19,22 @@ router.get('/', function(req, res) {
 			keys.forEach(function(key) {
 				pairs.add(key + " = " + query[key]);
 			});
-			var where = pairs.join(" and ");
+			
+			var where = "";
+			if (pairs.length) {
+				where = 'where' + pairs.join(" and ");
+			}
 
-			cnn.checkQry('select score, firstName, lastName, email, gender, age,' +
-				' introduction, picture, saved, archived from (select * from' +
-				' (select oldPerson as usr, score from Matches where newPerson = ? union' +
-				' select newPerson as usr, score from Matches where oldPerson = ?)' +
+			cnn.chkQry('select score, firstName, lastName, email, gender, age,' +
+				' introduction, pictureUrl, saved, archived from (select * from' +
+				' (select oldPerson as usr, score, saved, archived from Matches where newPerson = ? union' +
+				' select newPerson as usr, score, saved, archived from Matches where oldPerson = ?) as M' +
 				' order by score) as S JOIN (select * from User) as U ON S.usr = U.id' +
-				' where ?;',
-				[usrId, usrId, where], cb);
+				' ' + where,
+				[usrId, usrId], cb);
 		}
 	},
-	function(result, cb) {
+	function(result, fields, cb) {
 		res.status(200).json(result);
 		cb();
 	}],
@@ -45,7 +44,7 @@ router.get('/', function(req, res) {
 });
 
 
-router.put('/:mId', function(req, res) {
+router.put('/:usrId/Matches/:mId', function(req, res) {
 	var vld = req.validator;
 	var cnn = req.cnn;
 	var mId = req.params.mId;
@@ -56,7 +55,7 @@ router.put('/:mId', function(req, res) {
 		if (vld.checkPrsOK(usrId, cb) && 
 			vld.check(!(body.saved && body.archived), 
 			 Tags.badValue, ['saved', 'archived'], cb)) {
-			cnn.checkQry('update Matches set ? where id = ?', [body, mId], cb);
+			cnn.chkQry('update Matches set ? where id = ?', [body, mId], cb);
 		}
 	}],
 	function(err) {
@@ -67,30 +66,36 @@ router.put('/:mId', function(req, res) {
 	});
 });
 
-router.get('/:mId', function(req, res) {
+router.get('/:usrId/Matches/:mId', function(req, res) {
 	var vld = req.validator;
 	var cnn = req.cnn;
 	var mId = req.params.mId;
 
-	if (vld.checkPrsOK(usrId)) {
-		cnn.checkQry('select score, firstName, lastName, email, gender, age,' +
-			' introduction, picture, saved, archived from (select * from' +
-			' (select oldPerson as usr, score from Matches where newPerson = ? union' +
-			' select newPerson as usr, score from Matches where oldPerson = ?)' +
-			' order by score) as S JOIN (select * from User) as U ON S.usr = U.id' +
-			' where id = ?;', [mId], function(err, results, fields) {
-				if (!err) {
-					res.status(200).json(results);
-				}
-		});
-	}
-	else {
-		res.status(403).end();
-	}
-	cnn.release();
+	async.waterfall([
+	function(cb) {
+		if (vld.checkPrsOK(usrId)) {
+			cnn.chkQry('select * from Matches where id = ? and ' + 
+			 'newPerson = ?', [mId, usrId], cb);
+		}
+	},
+	function(match, fields, cb) {
+		if (vld.check(match.length, Tags.notFound, null, cb)) {
+			cnn.chkQry('select id, score, firstName, lastName, email, ' +
+			 ' gender, age, introduction, picture from Matches M JOIN User' + 
+			 ' U ON M.newPerson = U.id where id = ?', [mId], cb);
+		}
+	},
+	function(matchInfo, fields, cb) {
+		res.status(200).json(matchInfo);
+		cb();
+	}],
+	function(err) {
+		cnn.release();
+	});
 });
 
 
 
 
 
+module.exports = router;

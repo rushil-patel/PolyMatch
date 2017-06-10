@@ -5,6 +5,10 @@ var crypto = require('crypto');
 var sessions = {};          // All currently logged-in Sessions
 var duration = 7200000;     // Two hours in milliseconds
 var cookieName = 'PMAuth'; // Cookie key for authentication tokens
+var adminLogin = {
+   'email': 'adm@calpoly.edu', 
+   'password': 'password'
+};
 
 // Session-constructed objects represent an ongoing login session, including
 // user details, login time, and time of last use, the latter for the purpose
@@ -14,14 +18,13 @@ var Session = function Session(user) {
    this.lastName = user.lastName;
    this.id = user.id;
    this.email = user.email;
-   this.role = user.role;
 
    this.loginTime = new Date().getTime();
    this.lastUsed = new Date().getTime();
 };
 
 Session.prototype.isAdmin = function() {
-   return this.role == 1;
+   return this.email === adminLogin.email;
 };
 
 // Export a function that logs in |user| by creating an authToken and sending it back
@@ -67,3 +70,4 @@ exports.router = function(req, res, next) {
 
 exports.cookieName = cookieName;
 exports.sessions = sessions;
+exports.adminLogin = adminLogin;

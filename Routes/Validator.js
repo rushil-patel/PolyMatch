@@ -62,6 +62,8 @@ Validator.prototype.chain = function(test, tag, params) {
 };
 
 Validator.prototype.checkAdmin = function(cb) {
+  console.log(this.session);
+  console.log(this.session.isAdmin());
    return this.check(this.session && this.session.isAdmin(),
     Validator.Tags.noPermission, null, cb);
 };
