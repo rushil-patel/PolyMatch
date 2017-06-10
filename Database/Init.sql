@@ -1,6 +1,6 @@
-drop database if exists CHANGE;
-create database CHANGE;
-use CHANGE;
+drop database if exists cyerina;
+create database cyerina;
+use cyerina;
 
 create table User (
    id int auto_increment primary key,

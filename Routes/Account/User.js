@@ -7,6 +7,7 @@ var cnnConfig = require('../connection.json');
 router.baseURL = '/Users';
 
 router.use('/', require('../Matches/Matches.js'));
+router.use('/', require('../Preferences/Prefs.js'));
 
 router.post("/", function(req, res) {
 
