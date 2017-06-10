@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <title>CHS</title>
+</head>
+<script src="../node_modules/angular/angular.min.js"></script>
+<script src="../node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+<link rel="stylesheet" href="../node_modules/angular-material/angular-material.min.css">
+
+<script src="chsapp.js"></script>
+<link rel="stylesheet" href="chsapp.css"></script>
+
+<script src="Util/navController.js"></script>
+<script src="Util/notifyDlg.js"></script>
+<script src="Home/homeController.js"></script>
+<script src="Register/registerController.js"></script>
+<script src="Login/loginController.js"></script>
+<script src="Login/loginService.js"></script>
+<script src="Conversation/cnvOverviewController.js"></script>
+<script src="Conversation/cnvDetailController.js"></script>
+<script src="ui-routes.js"></script>
+
+<body ng-app="mainApp">
+   <nav class="navbar navbar-default" ng-controller="navController">
+      <ul class="nav navbar-nav">
+         <li ng-if="!user">
+            <a ui-sref="login">Login</a>
+         </li>
+         <li ng-if="!user">
+            <a ui-sref="register">Register</a>
+         </li>
+         <li ng-if="!!user">
+            <a ui-sref="cnvOverview">All Conversations</a>
+         </li>
+         <li ng-if="!!user">
+            <a ng-click="myCnvs()" ui-sref="myCnv"> My conversations </a>
+         </li>
+      </ul>
+      <ul ng-if="!!user" class="nav navbar-nav pull-right">
+         <li>
+            <a ng-click="logout()">Logout</a>
+         </li>
+         <li>{{user.firstName + " " + user.lastName}}</li>
+      </ul>
+      <ul class="nav navbar-nav pull-right">
+         <span uib-dropdown on-toggle="toggled(open)">
+            <a href id="simple-dropdown" uib-dropdown-toggle>
+              Language
+            </a>
+            <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+              <li>
+                  <option ng-if="lang !== 'spanish'" href ng-click="changeLang('english')">English</option>
+                  <option ng-if="lang === 'spanish'" href ng-click="changeLang('english')">Ingles</option>
+              </li>
+              <li>
+                  <option ng-if="lang !== 'spanish'" href ng-click="changeLang('spanish')">Spanish</option>
+                  <option ng-if="lang === 'spanish'" href ng-click="changeLang('spanish')">Espanol</option>
+              </li>
+            </ul>
+          </span>
+      </ul>
+   </nav>
+   <ui-view/>
+</body>
+</html>

@@ -4,11 +4,30 @@
   "description": "A site for helping Cal Poly freshman find roommates",
   "main": "main.js",
   "dependencies": {
+    "@uirouter/angularjs": "^1.0.3",
+    "angular": "^1.6.4",
+    "angular-animate": "^1.5.0",
+    "angular-aria": "^1.6.4",
+    "angular-dynamic-locale": "^0.1.30",
+    "angular-i18n": "^1.5.0",
+    "angular-marked": "^1.2.1",
+    "angular-material": "^1.1.4",
+    "angular-messages": "^1.5.0",
+    "angular-mocks": "^1.5.0",
+    "angular-sanitize": "^1.5.0",
+    "angular-toastr": "^1.7.0",
+    "angular-translate": "^2.10.0",
+    "angular-translate-handler-log": "^2.10.0",
+    "angular-translate-loader-static-files": "^2.10.0",
+    "angular-translate-storage-local": "^2.10.0",
+    "angular-ui-codemirror": "^0.3.0",
+    "angular-ui-router": "^1.0.3",
     "async": "^2.0.0-rc.6",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
-    "mysql": "^2.11.1"
+    "mysql": "^2.11.1",
+    "ngstorage": "^0.3.10"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
