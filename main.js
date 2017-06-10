@@ -27,7 +27,9 @@ app.use(Session.router);
 // otherwise respond immediately with 401 and noLogin error tag.
 app.use(function(req, res, next) {
    console.log(req.method + " : " + req.path);
-   if (req.session || (req.method === 'POST' &&
+   if (req.session || req.path === '/Dorms' ||
+    req.path === '/Majors' ||
+    (req.method === 'POST' &&
     (req.path === '/Users' || req.path === '/Ssns'))) {
       req.validator = new Validator(req, res);
       next();
@@ -42,8 +44,10 @@ app.use(CnnPool.router);
 // Load all subroutes
 app.use('/Users', require('./Routes/Account/User.js'));
 app.use('/Ssns', require('./Routes/Account/Ssns.js'));
+app.use('/Majors', require('./Routes/Enums/Majors.js'));
+app.use('/Dorms', require('./Routes/Enums/Dorms.js'));
 //app.use('/Prefs', require('./Routes/Preferences/Prefs.js'));
-//app.use('/Hobbies', require('./Routes/Hobbies/Hobbies.js'));
+app.use('/Hobbies', require('./Routes/Enums/Hobbies.js'));
 //app.user('/Matches', require(./Routes/Matches/Matches.js));
 
 // Special debugging route for /DB DELETE.  Clears all table contents,
@@ -65,7 +69,7 @@ app.delete('/DB', function(req, res) {
          req.cnn.query("delete from " + tblName, cb);
       };
    }));
-   
+
    // Callbacks to reset increment bases
    cbs = cbs.concat(["User", "Preferences", "Hobbies", "HobbyEnum",
     "Matches"].map(

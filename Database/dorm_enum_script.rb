@@ -12,7 +12,7 @@ insert = ""
 list.each do |dormName|
 	insert = "INSERT\n" +
 	 "INTO Dorms (name)\n" +
-	 "VALUES (#{dormName});\n\n"
+	 "VALUES (\'#{dormName}\');\n\n"
 	sqlStatements.push(insert)
 end
 
