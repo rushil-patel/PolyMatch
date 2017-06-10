@@ -42,22 +42,54 @@ router.get("/:usrId", function(req, res) {
    var usrId = req.params.usrId;
    var cnn = req.cnn;
    var vld = req.validator;
-   console.log(usrId);
+
    async.waterfall([
    function(cb) {
       cnn.chkQry("select * from User where id = ?", usrId, cb)
    },
    function(usersResult, fields, cb) {
       if (vld.check(usersResult.length, Tags.notFound, null, cb)) {
-         res.json(usersResult);
+         var user = usersResult[0];m
+         delete user.password;
+         res.json([user]);
          cb()
       }
    }],
    function() {
       cnn.release();
-   })
-
+   });
 })
+
+router.put("/:usrId", function(req, res) {
+   var vld = req.validator;
+   var body = req.body;
+   var admin = req.session.isAdmin();
+   var cnn = req.cnn;
+   var usrId = req.params.userId;
+   async.waterfall([
+   function(cb) {
+      if (vld.checkPrsOK(usrId, cb) &&
+       vld.hasOnlyFields(body, ["firstName", "lastName", "picture", "gender",
+       "age", "introduction", "password", "oldPassword"], cb) &&
+       vld.check((!body.password && body.password != "") || body.oldPassword ||
+       admin, Tags.noOldPwd, null, cb)) {
+          cnn.chkQry("select * from User where id = ?", usrId);
+       }
+   },
+   function(usersResult, fields, cb) {
+      if (vld.check(usersResult.length, Tags.notFound, null, cb)) {
+         delete body.oldPassword;
+         cnn.chkQry("update User set ? where = ?", [body, usrId], cb)
+      }
+   },
+   function(result, fields, cb) {
+      res.status(200).end();
+      cb();
+   }],
+   function(err) {
+      cnn.release()
+   })
+});
 
 
 module.exports = router;
