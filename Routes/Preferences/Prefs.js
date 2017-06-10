@@ -14,7 +14,7 @@ router.get('/:usrId/Prefs', function(req, res) {
 
    async.waterfall([
    function(cb) {
-      cnn.chkQuery(query, [user], cb);  
+      cnn.chkQry(query, [user], cb);  
    },
    function(results, fields, cb) {
       if (vld.check(results.length, Tags.notFound, null, cb)) {
@@ -35,7 +35,7 @@ router.post('/:usrId/Prefs', function(req, res) {
    var vld = req.validator;
    var body = req.body;
 
-   var requiredFields = ["dorm", "major", "gradeRatio", "quiet", "greekLife",
+   var requiredFields = ["dormName", "major", "gradesRatio", "quiet", "greekLife",
     "smoking", "drinking", "wakeTime", "sleepTime", "cleanliness"];
    //Check prs ok, has fields, the values of some of the fields
 
@@ -43,7 +43,9 @@ router.post('/:usrId/Prefs', function(req, res) {
    function(cb) {
       if (vld.checkPrsOK(user, cb) && vld.hasFields(body, requiredFields, cb) &&
        vld.chain(body.wakeTime < 24 && body.wakeTime > -1, Tags.badValue, ["wakeTime"])
-       .chain(body.sleepTime < 24 && body.wakeTime > -1, Tags.badValue, ["sleepTime"])) {
+       .chain(body.sleepTime < 24 && body.wakeTime > -1, Tags.badValue, ["sleepTime"])
+       .check(body.gradesRatio < 101 && body.gradesRatio > -1, Tags.badValue, ["gradesRatio"], cb)) {
+         body.userId = user;
          cnn.chkQry('insert into Preferences set ?', [body], cb);
       }
    }],
@@ -61,15 +63,17 @@ router.put('/:usrId/Prefs', function(req, res) {
    var vld = req.validator;
    var body = req.body;
 
-   var requiredFields = ["dorm", "major", "gradeRatio", "quiet", "greekLife",
+   var requiredFields = ["dormName", "major", "gradesRatio", "quiet", "greekLife",
     "smoking", "drinking", "wakeTime", "sleepTime", "cleanliness"];
 
    async.waterfall([
    function(cb) {
       if (vld.checkPrsOK(user, cb) && vld.hasOnlyFields(body, requiredFields, cb) &&
-       vld.chain(body.wakeTime < 24 && body.wakeTime > -1, Tags.badValue, ["wakeTime"])
-       .chain(body.sleepTime < 24 && body.wakeTime > -1, Tags.badValue, ["sleepTime"])) {
-         cnn.chkQry('update Preferences P where P.usrId = ? set ?', [user, body], cb);
+       vld.hasFields(body, Object.keys(body), cb) &&
+       vld.chain(!body.wakeTime || body.wakeTime < 24 && body.wakeTime > -1, Tags.badValue, ["wakeTime"])
+       .chain(!body.sleepTime || body.sleepTime < 24 && body.wakeTime > -1, Tags.badValue, ["sleepTime"])
+       .check(!body.gradesRatio || body.gradesRatio < 101 && body.gradesRatio > -1, Tags.badValue, ["gradesRatio"], cb)) {
+         cnn.chkQry('update Preferences P set ? where P.userId = ?', [body, user], cb);
       }
    },
    function(results, fields, cb) {
