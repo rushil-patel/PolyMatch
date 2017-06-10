@@ -1,24 +1,24 @@
 INSERT
 INTO Dorms (name)
-VALUES (North Mountain);
+VALUES ('North Mountain');
 
 INSERT
 INTO Dorms (name)
-VALUES (Red Bricks);
+VALUES ('Red Bricks');
 
 INSERT
 INTO Dorms (name)
-VALUES (Sierra Madre);
+VALUES ('Sierra Madre');
 
 INSERT
 INTO Dorms (name)
-VALUES (Yosemite);
+VALUES ('Yosemite');
 
 INSERT
 INTO Dorms (name)
-VALUES (Cerro Vista);
+VALUES ('Cerro Vista');
 
 INSERT
 INTO Dorms (name)
-VALUES (Poly Cnayon Villag);
+VALUES ('Poly Canyon Village');
 
