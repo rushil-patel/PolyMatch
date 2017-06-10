@@ -58,27 +58,22 @@ app.delete('/DB', function(req, res) {
          }
    }];
 
-   // cbs = cbs.concat(["Conversation", "Message", "Person"].map(
-   // function(tblName) {
-   //    return function(cb) {
-   //       req.cnn.query("delete from " + tblName, cb);
-   //    };
-   // }));
-   //
-   // // Callbacks to reset increment bases
-   // cbs = cbs.concat(["Conversation", "Message", "Person"].map(
-   // function(tblName) {
-   //    return function(cb) {
-   //       req.cnn.query("alter table " + tblName + " auto_increment = 1", cb);
-   //    };
-   // }));
-   //
-   // // Callback to reinsert admin user
-   // cbs.push(function(cb) {
-   //    req.cnn.query('INSERT INTO Person (firstName, lastName, email,' +
-   //     ' password, whenRegistered, role) VALUES ' +
-   //     '("Joe", "Admin", "adm@11.com","password", NOW(), 1);', cb);
-   // });
+   cbs = cbs.concat(["User", "Preferences", "Hobbies", "HobbyEnum",
+    "Matches"].map(
+   function(tblName) {
+      return function(cb) {
+         req.cnn.query("delete from " + tblName, cb);
+      };
+   }));
+   
+   // Callbacks to reset increment bases
+   cbs = cbs.concat(["User", "Preferences", "Hobbies", "HobbyEnum",
+    "Matches"].map(
+   function(tblName) {
+      return function(cb) {
+         req.cnn.query("alter table " + tblName + " auto_increment = 1", cb);
+      };
+   }));
 
    // Callback to clear sessions, release connection and return result
    cbs.push(function(callback){
