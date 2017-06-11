@@ -10,6 +10,6 @@ app.factory("notifyDlg", ["$mdDialog", function(mdD) {
             scope: scp,
             size: sz || 'sm'
          }).result;
-      }
+      },
    };
 }]);

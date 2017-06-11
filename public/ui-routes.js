@@ -14,4 +14,9 @@ app.config(['$stateProvider', '$urlRouterProvider',
          templateUrl: 'Login/login.template.html',
          controller: 'loginController'
       })
+      .state('matches', {
+         url: '/matches',
+         templateUrl: 'Matches/matches.template.html',
+         controller: 'matchesController'
+      })
    }]);
