@@ -17,19 +17,19 @@ router.get('/:usrId/Matches', function(req, res) {
 			// Create where clause
 			pairs = [];
 			keys.forEach(function(key) {
-				pairs.add(key + " = " + query[key]);
+				pairs.push(key + " = " + query[key]);
 			});
 			
 			var where = "";
 			if (pairs.length) {
-				where = 'where' + pairs.join(" and ");
+				where = ' where ' + pairs.join(" and ");
 			}
+			console.log(where);
 
-			cnn.chkQry('select score, firstName, lastName, email, gender, age,' +
-				' introduction, pictureUrl, saved, archived from (select * from' +
-				' (select oldPerson as usr, score, saved, archived from Matches where newPerson = ?) as M' +
-				' order by score) as S JOIN (select * from User) as U ON S.usr = U.id' +
-				' ' + where,
+			cnn.chkQry('select * from (select oldPerson as usr, score, saved, archived, notes' +
+			    ' from Matches where newPerson = ?) as S JOIN (select * from User)' +
+			    ' as U ON S.usr = U.id JOIN (select * from Preferences) as P ON U.id = P.userId'
+			    + where + ' order by score desc',
 				[usrId], cb);
 		}
 	},

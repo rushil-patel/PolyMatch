@@ -1,5 +1,5 @@
 app.controller('matchesController',
- ['$scope', '$state', 'notifyDlg',
-   function($scope, $state, nDlg) {
-   
+ ['$scope', '$state', 'notifyDlg', 'matches',
+   function($scope, $state, nDlg, matches) {
+   	$scope.matches = matches;
 }]);
