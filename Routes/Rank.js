@@ -61,21 +61,13 @@ Rank.normalize = function(x, ranges) {
 }
 
 Rank.rank = function (prefA, prefB) {
-   console.log("original:")
-   console.log(prefA);
-   console.log(prefB);
+
    var featuresA = Rank.extractFeatures(prefA, Rank.props);
    var featuresB = Rank.extractFeatures(prefB, Rank.props);
 
-   console.log(Rank.normalRanges);
-   console.log("featureA:");
-   console.log(featuresA);
    Rank.oneHotEncode(featuresA, featuresB, Rank.categoricals);
    Rank.normalize(featuresA, Rank.normalRanges);
    Rank.normalize(featuresB, Rank.normalRanges);
-   console.log("normalized");
-   console.log(featuresA);
-   console.log(featuresB);
 
    var aX = Object.keys(featuresA).map(function(key) {
       return featuresA[key];
@@ -83,10 +75,7 @@ Rank.rank = function (prefA, prefB) {
    var bX = Object.keys(featuresB).map(function(key) {
       return featuresB[key];
    });
-   console.log("similarity score:");
-   console.log(aX);
-   console.log(bX);
-   console.log(similarity(aX, bX));
+
    return similarity(aX, bX);
 }
 
