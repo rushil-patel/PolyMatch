@@ -4,11 +4,6 @@ var app = angular.module('mainApp', [
    'ngMaterial'
 ]);
 
-app.config(function($mdAriaProvider) {
-   // Globally disables all ARIA warnings.
-   $mdAriaProvider.disableWarnings();
-});
-
 app.constant("errMaps", {
    "english" : 
    {

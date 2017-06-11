@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-      <title>PolyMatch</title>
+<title>PolyMatch</title>
 </head>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -20,8 +20,17 @@
 
 <body ng-app="mainApp">
   <md-nav-bar nav-bar-aria-label="navigation links">
-    <md-nav-item md-nav-click="goto('page1')" name="page">
-      Page one
+    <md-nav-item md-nav-sref="login" name="loginLink">
+      Login
+    </md-nav-item>
+    <md-nav-item md-nav-sref="register" name="registerLink">
+      Register
+    </md-nav-item>
+    <md-nav-item md-nav-sref="user" name="username">
+      username
+    </md-nav-item>
+    <md-nav-item md-nav-click="logout()" name="logout">
+      logout
     </md-nav-item>
   </md-nav-bar>
       <!-- <ul class="nav navbar-nav">

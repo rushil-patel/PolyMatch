@@ -9,4 +9,8 @@ app.config(['$stateProvider', '$urlRouterProvider',
       .state('home',  {
          url: '/',
       })
+      .state('register', {
+      	url: '/register',
+      	templateUrl: '/Register/register.template.html'
+      })
    }]);
