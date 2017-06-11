@@ -28,6 +28,7 @@ function($http) {
          });
       },
       getUser: function() {
+         console.log(user);
          return user;
       }
    };

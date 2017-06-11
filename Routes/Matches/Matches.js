@@ -27,11 +27,10 @@ router.get('/:usrId/Matches', function(req, res) {
 
 			cnn.chkQry('select score, firstName, lastName, email, gender, age,' +
 				' introduction, pictureUrl, saved, archived from (select * from' +
-				' (select oldPerson as usr, score, saved, archived from Matches where newPerson = ? union' +
-				' select newPerson as usr, score, saved, archived from Matches where oldPerson = ?) as M' +
+				' (select oldPerson as usr, score, saved, archived from Matches where newPerson = ?) as M' +
 				' order by score) as S JOIN (select * from User) as U ON S.usr = U.id' +
 				' ' + where,
-				[usrId, usrId], cb);
+				[usrId], cb);
 		}
 	},
 	function(result, fields, cb) {

@@ -30,5 +30,19 @@ app.config(['$stateProvider', '$urlRouterProvider',
                return api.getMajors();
             }]
          }
+      })
+      .state('matches', {
+         url: '/matches',
+         templateUrl: 'Matches/matches.template.html',
+         controller: 'matchesController',
+         resolve: {
+            matches: ['$q', '$http', 'login',
+             function($q, $http, login) {
+               return $http.get('/Users/' + login.getUser().id + '/Matches')
+               .then(function(response) {
+                  return response.data;
+               });
+            }]
+         }
       });
 }]);

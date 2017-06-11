@@ -10,9 +10,11 @@ router.get('/:usrId/Prefs', function(req, res) {
 	var user = req.params.usrId;
 	var cnn = req.cnn;
    var vld = req.validator;
-	var query = 'select *' +
-	 ' from Preferences P' +
-	 ' where P.userId = ?';
+	var query = 'select P.id, P.userId, D.name as dormName, M.name as major, P.gradesRatio,' +
+    ' P.quiet, P.greekLife, P.smoking, P.drinking, P.wakeTime,' +
+    ' P.sleepTime, P.cleanliness' +
+	 ' from Preferences P, Majors M, Dorms D' +
+	 ' where D.id = P.dormName and M.id = P.major and P.userId = ?';
 
    async.waterfall([
    function(cb) {
@@ -20,8 +22,12 @@ router.get('/:usrId/Prefs', function(req, res) {
    },
    function(results, fields, cb) {
       if (vld.check(results.length, Tags.notFound, null, cb)) {
-         res.json(results);
-         cb();
+       results[0].quiet = !!results[0].quiet;
+       results[0].greekLife = !!results[0].greekLife;
+       results[0].smoking = !!results[0].smoking;
+       results[0].drinking = !!results[0].drinking;
+       res.json(results);
+       cb();
       }
    }],
    function(err) {
@@ -71,8 +77,8 @@ router.post('/:usrId/Prefs', function(req, res) {
                 return
              }
              var res = {
-                userPref,
-                nonUserPrefs
+                userPref: userPref,
+                nonUserPrefs: nonUserPrefs
              };
              cb(err, res);
           });
@@ -138,8 +144,8 @@ router.put('/:usrId/Prefs', function(req, res) {
                 return
              }
              var res = {
-                userPref,
-                nonUserPrefs
+                userPref: userPref,
+                nonUserPrefs: nonUserPrefs
              };
              cb(err, res);
           });
@@ -166,7 +172,7 @@ router.put('/:usrId/Prefs', function(req, res) {
    },
    function(matches, cb) {
       if (!matches.length) {
-         return cb()
+         return cb(null, null, null);
       }
 
       var qrys = ""

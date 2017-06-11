@@ -1,6 +1,6 @@
-drop database if exists rpatel28;
-create database rpatel28;
-use rpatel28;
+drop database if exists cyerina;
+create database cyerina;
+use cyerina;
 
 create table User (
    id int auto_increment primary key,
@@ -17,11 +17,21 @@ create table User (
    unique key(email)
 );
 
+create table Majors (
+   id int auto_increment primary key,
+   name varchar(50)
+);
+
+create table Dorms (
+   id int auto_increment primary key,
+   name varchar(25)
+);
+
 create table Preferences (
    id int auto_increment primary key,
    userId int,
-   dormName varchar(40),
-   major varchar(40),
+   dormName int,
+   major int,
    gradesRatio int,
    quiet boolean,
    greekLife boolean,
@@ -30,6 +40,8 @@ create table Preferences (
    wakeTime int,
    sleepTime int,
    cleanliness int,
+   constraint FKPreferences_dormName foreign key (dormName) references Dorms(id),
+   constraint FKPreferences_major foreign key (major) references Majors(id),
    constraint FKPreferences_userId foreign key (userId) references User(id)
     on delete cascade
 );
@@ -62,14 +74,4 @@ create table Matches (
    on delete cascade,
    constraint FKMatches_oldPerson foreign key (oldPerson) references User(id)
    on delete cascade
-);
-
-create table Majors (
-   id int auto_increment primary key,
-   name varchar(50)
-);
-
-create table Dorms (
-   id int auto_increment primary key,
-   name varchar(25)
 );

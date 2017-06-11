@@ -1,0 +1,84 @@
+<md-list>
+	<md-list-item ng-repeat="match in matches">
+		<img ng-src="{{match.imgSrc}}" class="md-avatar" alt="{{defaultImg}}">
+		<div class=md-list-item-text>
+			<h3>{{ match.firstName }} {{match.lastName}}</h3>
+		</div>
+	</md-list-item>
+</md-list>
+
+<div layout="column" layout-align="center center">
+	<h2> Potential Roomates! </h2>
+	<md-list>
+		<md-list-item ng-repeat="match in matches">>
+			<div flex="80">
+				<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+	        <md-card-title>
+	          <md-card-title-text>
+	            <span class="md-headline">{{match.firstName}} {{match.lastName}}</span>
+	            <div layout="horizontal">
+	            	<span class="md-subhead">
+	            		<div flex>
+			            	{{match.email}}</br>Gender: {{match.gender}}
+			            </div>
+	            	</span>
+		          </div>
+	          </md-card-title-text>
+	          <md-card-title-media>
+	            <div class="md-media-lg card-media" src="default.png">
+	            	<img ng-src="{{match.imgSrc}}" alt="Images/default.png">
+	            </div>
+	          </md-card-title-media>
+	        </md-card-title>
+	        <md-card-content>
+	        	<p>{{match.introduction}}</p>
+	        </md-card-content>
+	        <md-card-actions layout="row" layout-align="end center">
+	          <md-button>Save</md-button>
+	          <md-button>Hide</md-button>
+	        </md-card-actions>
+	      </md-card>
+	    </div>
+    </md-list-item>
+	</md-list>
+</div>
+
+
+
+<div layout="column" layout-align="center center">
+	<h2> Potential Roomates! </h2>
+	<md-list>
+		<md-list-item>
+			<div flex="80">
+				<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+	        <md-card-title>
+	          <md-card-title-text>
+	            <span class="md-headline">Sigal Shaul</span>
+	            <div layout="horizontal">
+	            	<span class="md-subhead">
+	            		<div flex>
+			            	sshaul@calpoly.edu</br>Gender: female
+			            </div>
+	            	</span>
+		          </div>
+	          </md-card-title-text>
+	          <md-card-title-media>
+	            <div class="md-media-lg card-media" src="default.png">
+	            	<img ng-src="Images/default.png">
+	            </div>
+	          </md-card-title-media>
+	        </md-card-title>
+	        <md-card-content>
+	        	<b>Dorm:</b> North Mountain</br>
+						<b>Major:</b> Software Engineering</br>
+						<b>Introduction:</b> Hi I'm Sigal!</br>
+	        </md-card-content>
+	        <md-card-actions layout="row" layout-align="end center">
+	          <md-button>Save</md-button>
+	          <md-button>Hide</md-button>
+	        </md-card-actions>
+	      </md-card>
+	    </div>
+    </md-list-item>
+	</md-list>
+</div>
