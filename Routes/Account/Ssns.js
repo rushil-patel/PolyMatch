@@ -25,7 +25,7 @@ router.post('/', function(req, res) {
    var cnn = req.cnn;
    var vld = req.validator;
 
-   if (req.body.email === adminLogin.email && 
+   if (req.body.email === adminLogin.email &&
     req.body.password === adminLogin.password) {
       cookie = ssnUtil.makeSession(adminLogin, res);
       res.location(router.baseURL + '/' + cookie).status(200).end();

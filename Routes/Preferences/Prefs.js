@@ -66,7 +66,7 @@ router.post('/:usrId/Prefs', function(req, res) {
           if (err) {
              res.status(500).send();
              cb(err, qRes, fields);
-             return
+             return;
           }
           var userPref = userPref[0]
           cnn.chkQry('select * from Preferences where userId != ?', [user],
@@ -74,7 +74,7 @@ router.post('/:usrId/Prefs', function(req, res) {
              if (err) {
                 res.status(500).send()
                 cb(err, qRes, fields);
-                return
+                return;
              }
              var res = {
                 userPref: userPref,
@@ -96,7 +96,7 @@ router.post('/:usrId/Prefs', function(req, res) {
    },
    function(matches, cb) {
       if (!matches.length) {
-         return cb()
+         return cb();
       }
       cnn.chkQry("insert into Matches (newPerson, oldPerson, score) VALUES ? ",
         [matches], cb);

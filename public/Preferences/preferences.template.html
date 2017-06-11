@@ -1,0 +1,123 @@
+<div class="md-padding" ng-cloak layout="column">
+  <md-card>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Update your preferences</span>
+        <span class="md-subhead">Tell us a little about you.</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+
+      <span>Which dormitrory do you prefer?</span>
+      <md-card-content>
+         <md-autocomplete placeholder="type in a dormitrory" md-selected-item="selectedDorm" md-search-text="dormSearch" md-items="item in queryDorm(dormSearch)" md-item-text="item.name">
+            <span md-highlight-text="searchText">{{item.name}}</span>
+         </md-autocomplete>
+      </md-card-content>
+
+
+     <span>What's your major?</span>
+     <md-card-content>
+        <md-autocomplete placeholder="type in a major" md-selected-item="selectedMajor" md-search-text="majorSearch" md-items="item in queryMajor(majorSearch)" md-item-text="item.name">
+           <span md-highlight-text="searchText">{{item.name}}</span>
+        </md-autocomplete>
+     </md-card-content>
+
+
+     <span>How important are grades and social life to you?</span>
+     <md-card-content>
+        <md-slider-container>
+         <div flex="10" layout layout-align="center center">
+           <span class="md-body-1">Grades</span>
+         </div>
+         <md-slider ng-model="gradesRatio" ng-change="gradesRatioUpdate()" min="0" max="100" aria-label="regular slider"></md-slider>
+
+         <md-input-container>
+           <input flex type="number" ng-model="gradesRatio" ng-change="gradesRatioUpdate()" aria-label="regular-slider">
+         </md-input-container>
+       </md-slider-container>
+       <md-slider-container>
+         <div flex="10" layout layout-align="center center">
+           <span class="md-body-1">Social</span>
+         </div>
+         <md-slider md-invert ng-model="socialRatio" ng-change="socialRatioUpdate()" min="0" max="100" aria-label="invertd slider"></md-slider>
+
+         <md-input-container>
+           <input flex type="number" ng-model="socialRatio" ng-change="socialRatioUpdate()" aria-label="invert-slider">
+         </md-input-container>
+       </md-slider-container>
+    </md-card-content>
+
+
+   <span>Do you prefer a quiet environment?</span>
+   <md-card-content>
+      <md-switch ng-model="quiet" aria-label="Switch 1"></md-switch>
+   </md-card-content>
+
+
+   <span>Do you participating in Greek life?</span>
+   <md-card-content>
+      <md-switch ng-model="greekLife" aria-label="Switch 1"></md-switch>
+   </md-card-content>
+
+   <span>Do you smoke?</span>
+   <md-card-content>
+      <md-switch ng-model="smoking" aria-label="Switch 1"></md-switch>
+   </md-card-content>
+
+   <span>Do you like to drink?</span>
+   <md-card-content>
+      <md-switch ng-model="drinking" aria-label="Switch 1"></md-switch>
+   </md-card-content>
+
+   <span>What time do you usually go to sleep?</span>
+   <md-card-content>
+      <div layout-gt-sm="row">
+         <md-input-container>
+           <label>sleep time</label>
+           <input ng-model="sleepHour" type="number">
+        </md-input-container>
+        <md-input-container>
+           <md-select ng-model="sleepMeridien" placeholder="{{sleepMeridien}}"
+            class="md-no-underline">
+              <md-option value="am">am</md-option>
+              <md-option value="pm">pm</md-option>
+           </md-select>
+        </md-input-container>
+     </div>
+  </md-card-content>
+
+
+  <span>What time do you usually wake up?</span>
+  <md-card-content>
+     <div layout-gt-sm="row">
+        <md-input-container>
+         <label>sleep time</label>
+         <input ng-model="wakeHour" type="number">
+        </md-input-container>
+        <md-input-container>
+           <md-select ng-model="wakeMeridien" placeholder="{{wakeMeridien}}"
+            class="md-no-underline">
+              <md-option value="am">am</md-option>
+              <md-option value="pm">pm</md-option>
+           </md-select>
+        </md-input-container>
+     </div>
+  </md-card-content>
+
+
+  <span>How often do you like to clean? It's okay to be honest</span>
+  <md-card-content>
+     <md-radio-group ng-model="cleanliness" layout="row">
+        <md-radio-button value="1" class="md-primary">slob</md-radio-button>
+        <md-radio-button value="2">rarely</md-radio-button>
+        <md-radio-button value="3">sometimes</md-radio-button>
+        <md-radio-button value="4">often</md-radio-button>
+        <md-radio-button value="5">every day</md-radio-button>
+     </md-radio-group>
+  </md-card-content>
+
+   </md-card-content>
+   </md-card>
+
+</div>

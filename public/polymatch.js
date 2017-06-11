@@ -5,7 +5,7 @@ var app = angular.module('mainApp', [
 ]);
 
 app.constant("errMaps", {
-   "english" : 
+   "english" :
    {
       missingField: 'Field missing from request: ',
       badValue: 'Field has bad value: ',
@@ -39,10 +39,10 @@ app.constant("errMaps", {
    }
 });
 
-app.filter('tagError', ['errMaps', '$rootScope', 
+app.filter('tagError', ['errMaps', '$rootScope',
    function(errMaps, $rootScope) {
       return function(err) {
-         return errMaps[$rootScope.lang || 'english'][err.tag] + 
+         return errMaps[$rootScope.lang || 'english'][err.tag] +
           (err.params && err.params.length ? err.params[0] : "");
       };
 }]);

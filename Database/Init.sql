@@ -53,9 +53,9 @@ create table HobbyEnum (
 );
 
 create table Hobbies (
-   id int auto_increment primary key,
    userId int,
    hobbyId int,
+   primary key (userId, hobbyId),
    constraint FKHobbies_userId foreign key (userId) references User(id)
    on delete cascade,
    constraint FKHobbies_hobbyId foreign key (hobbyId) references HobbyEnum(id)

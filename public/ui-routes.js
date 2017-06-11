@@ -18,12 +18,25 @@ app.config(['$stateProvider', '$urlRouterProvider',
          templateUrl: 'Login/login.template.html',
          controller: 'loginController'
       })
+      .state('preferences', {
+         url: '/preferences',
+         templateUrl: 'Preferences/preferences.template.html',
+         controller: 'preferencesController',
+         resolve: {
+            dormList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getDorms();
+            }],
+            majorList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getMajors();
+            }]
+         }
+      })
       .state('matches', {
          url: '/matches',
          templateUrl: 'Matches/matches.template.html',
          controller: 'matchesController',
          resolve: {
-            matches: ['$q', '$http', 'login', 
+            matches: ['$q', '$http', 'login',
              function($q, $http, login) {
                return $http.get('/Users/' + login.getUser().id + '/Matches')
                .then(function(response) {
