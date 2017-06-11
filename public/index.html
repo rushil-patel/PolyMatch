@@ -9,16 +9,16 @@
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-material/angular-material.js"></script>
 
-<link rel="stylesheet" href="bower_components/angular-material/angular-material.css"></script>
+<link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
 
 <script src="polymatch.js"></script>
-<link rel="stylesheet" href="polymatch.css"></script>
+<link rel="stylesheet" href="polymatch.css">
+<link rel="stylesheet" href="Matches/matches.css">
 
 <script src="Util/navController.js"></script>
 <script src="Util/notifyDlg.js"></script>
 <script src="Login/loginController.js"></script>
 <script src="Login/loginService.js"></script>
-<script src="Matches/matches.js"></script>
 <script src="Matches/matchesController.js"></script>
 <script src="ui-routes.js"></script>
 
@@ -35,6 +35,9 @@
     </md-nav-item>
     <md-nav-item md-nav-click="logout()" name="logout">
       logout
+    </md-nav-item>
+    <md-nav-item ng-if="user" md-nav-sref="matches" name="matches">
+      My Matches
     </md-nav-item>
   </md-nav-bar>
       <!-- <ul class="nav navbar-nav">

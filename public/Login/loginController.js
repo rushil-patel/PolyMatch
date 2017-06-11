@@ -9,7 +9,7 @@ app.controller('loginController',
       })
       .catch(function() {
          nDlg.show($scope, "That name/password is not in our records", 
-          "Error");
+          "Error", [true, false]);
       });
    };
 }]);
