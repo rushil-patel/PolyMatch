@@ -1,11 +1,11 @@
 // Declare a service that allows an error message.
-app.factory("notifyDlg", ["$uibModal", function(uibM) {
+app.factory("notifyDlg", ["$mdDialog", function(mdD) {
    return {
       show: function(scp, msg, hdr, btns, sz) {
          scp.msg = msg;
          scp.hdr = hdr;
          scp.buttons = btns || ['OK'];
-         return uibM.open({
+         return mdD.show({
             templateUrl: 'Util/notifyDlg.template.html',
             scope: scp,
             size: sz || 'sm'

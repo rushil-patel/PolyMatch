@@ -1,12 +1,17 @@
-<div class="modal-header">
-   <h3 class="modal-title">{{hdr || "Note"}}</h3>
-</div>
-<div class = "modal-body">
-   {{msg}}
-</div>
-<div class="modal-footer">
-   <span ng-repeat="btn in buttons">
-      <button class="btn btn-primary" type="button" 
-       ng-click="$close(btn)">{{btn}}</button>
-   </span>
-</div>
+
+<md-dialog aria-label="List dialog">
+  <md-dialog-content>
+    <div class="modal-header">
+   		<h3 class="modal-title">{{hdr || "Note"}}</h3>
+	</div>
+	<div class = "modal-body">
+	   {{msg}}
+	</div>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <span ng-repeat="btn in buttons">
+	      <md-button class="btn btn-primary" type="button" 
+	       ng-click="$close(btn)">{{btn}}</button>
+	   </span>
+  </md-dialog-actions>
+</md-dialog>
