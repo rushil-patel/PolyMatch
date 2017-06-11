@@ -52,7 +52,7 @@ router.get("/:usrId", function(req, res) {
    },
    function(usersResult, fields, cb) {
       if (vld.check(usersResult.length, Tags.notFound, null, cb)) {
-         var user = usersResult[0];m
+         var user = usersResult[0];
          delete user.password;
          res.json([user]);
          cb()
