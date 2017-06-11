@@ -26,7 +26,7 @@ router.get('/:usrId/Matches', function(req, res) {
 			}
 			console.log(where);
 
-			cnn.chkQry('select * from (select oldPerson as usr, score, saved, archived, notes' +
+			cnn.chkQry('select * from (select id as matchId, oldPerson as usr, score, saved, archived, notes' +
 			    ' from Matches where newPerson = ?) as S JOIN (select * from User)' +
 			    ' as U ON S.usr = U.id JOIN (select * from Preferences) as P ON U.id = P.userId'
 			    + where + ' order by score desc',
@@ -47,7 +47,10 @@ router.put('/:usrId/Matches/:mId', function(req, res) {
 	var vld = req.validator;
 	var cnn = req.cnn;
 	var mId = req.params.mId;
+	var usrId = req.params.usrId;
 	var body = req.body;
+
+	console.log(mId);
 
 	async.waterfall([
 	function(cb) {
@@ -69,6 +72,7 @@ router.get('/:usrId/Matches/:mId', function(req, res) {
 	var vld = req.validator;
 	var cnn = req.cnn;
 	var mId = req.params.mId;
+	var usrId = req.params.usrId;
 
 	async.waterfall([
 	function(cb) {

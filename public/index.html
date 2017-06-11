@@ -44,6 +44,12 @@
     <md-nav-item ng-if="user" md-nav-sref="matches" name="matches">
       My Matches
     </md-nav-item>
+    <md-nav-item ng-if="user" md-nav-sref="savedMatches" name="savedMatches">
+      Saved Matches
+    </md-nav-item>
+    <md-nav-item ng-if="user" md-nav-sref="archivedMatches" name="archivedMatches">
+      Archived Matches
+    </md-nav-item>
   </md-nav-bar>
       <!-- <ul class="nav navbar-nav">
          <li ng-if="!user">
