@@ -16,12 +16,14 @@
 
 <script src="Util/navController.js"></script>
 <script src="Util/notifyDlg.js"></script>
+<script src="Login/loginController.js"></script>
+<script src="Login/loginService.js"></script>
 <script src="ui-routes.js"></script>
 
 <body ng-app="mainApp">
   <md-nav-bar nav-bar-aria-label="navigation links">
-    <md-nav-item md-nav-click="goto('page1')" name="page">
-      Page one
+    <md-nav-item md-nav-sref="login" name="login">
+      Login
     </md-nav-item>
   </md-nav-bar>
       <!-- <ul class="nav navbar-nav">

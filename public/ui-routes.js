@@ -9,4 +9,9 @@ app.config(['$stateProvider', '$urlRouterProvider',
       .state('home',  {
          url: '/',
       })
+      .state('login', {
+         url: '/login',
+         templateUrl: 'Login/login.template.html',
+         controller: 'loginController'
+      })
    }]);

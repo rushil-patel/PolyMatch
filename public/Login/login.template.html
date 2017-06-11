@@ -1,0 +1,23 @@
+<div>
+  <md-content layout-padding>
+    <form name="userForm">
+      <div layout="column" layout-align="center center">
+          <div>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Email</label>
+              <input type="email" ng-model="user.email">
+            </md-input-container>
+          </div>
+          <div>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Password</label>
+              <input ng-model="user.password">
+            </md-input-container>
+          </div> 
+          <div>
+            <md-button type="submit" class="md-raised md-primary" ng-click="login()" ng-disabled="!user.password || !user.email">Login</md-button>
+          </div>  
+      </div>    
+    </form>
+  </md-content>
+</div>
