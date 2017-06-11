@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 	var vld = req.validator;
 	var cnn = req.cnn;
 
-	cnn.chkQry('select * from HobbyEnum', null, 
+	cnn.chkQry('select * from HobbyEnum order by id asc', null,
 	 function(err, hobbies, fields) {
 		if (!err) {
 			res.status(200).json(hobbies);
@@ -26,17 +26,18 @@ router.post('/', function(req, res) {
 
 	async.waterfall([
 	function(cb) {
-		cnn.chkQry('select * from HobbyEnum where name = ?', 
+		cnn.chkQry('select * from HobbyEnum where name = ?',
 		 [body.name], cb);
 	},
 	function(result, fields, cb) {
 		if (vld.check(!result.length, Tags.dupHobby, null, cb))
 			cnn.chkQry('insert into HobbyEnum set ?', [req.body], cb);
-	}], 
+	},
+   function(result, fields, cb) {
+      res.location(router.baseURL + '/' + result.insertId).end();
+      cb()
+   }],
 	function(err) {
-		if (!err) {
-			res.status(200).end();
-		}
 		cnn.release();
 	});
 })

@@ -17,11 +17,21 @@ create table User (
    unique key(email)
 );
 
+create table Majors (
+   id int auto_increment primary key,
+   name varchar(50)
+);
+
+create table Dorms (
+   id int auto_increment primary key,
+   name varchar(25)
+);
+
 create table Preferences (
    id int auto_increment primary key,
    userId int,
-   dormName varchar(40),
-   major varchar(40),
+   dormName int,
+   major int,
    gradesRatio int,
    quiet boolean,
    greekLife boolean,
@@ -30,6 +40,8 @@ create table Preferences (
    wakeTime int,
    sleepTime int,
    cleanliness int,
+   constraint FKPreferences_dormName foreign key (dormName) references Dorms(id),
+   constraint FKPreferences_major foreign key (major) references Majors(id),
    constraint FKPreferences_userId foreign key (userId) references User(id)
     on delete cascade
 );
@@ -55,21 +67,11 @@ create table Matches (
    newPerson int,
    oldPerson int,
    score int,
-   saved tinyint,
-   archived tinyint,
-   notes varchar(126),
+   saved tinyint default 0,
+   archived tinyint default 0,
+   notes varchar(126) default "",
    constraint FKMatches_newPerson foreign key (newPerson) references User(id)
    on delete cascade,
    constraint FKMatches_oldPerson foreign key (oldPerson) references User(id)
    on delete cascade
-);
-
-create table Majors (
-   id int auto_increment primary key,
-   name varchar(50)
-);
-
-create table Dorms (
-   id int auto_increment primary key,
-   name varchar(25)
 );
