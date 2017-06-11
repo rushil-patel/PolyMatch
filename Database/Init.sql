@@ -1,6 +1,6 @@
-drop database if exists cyerina;
-create database cyerina;
-use cyerina;
+drop database if exists rpatel28;
+create database rpatel28;
+use rpatel28;
 
 create table User (
    id int auto_increment primary key,
@@ -55,9 +55,9 @@ create table Matches (
    newPerson int,
    oldPerson int,
    score int,
-   saved tinyint,
-   archived tinyint,
-   notes varchar(126),
+   saved tinyint default 0,
+   archived tinyint default 0,
+   notes varchar(126) default "",
    constraint FKMatches_newPerson foreign key (newPerson) references User(id)
    on delete cascade,
    constraint FKMatches_oldPerson foreign key (oldPerson) references User(id)
