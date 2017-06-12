@@ -1,24 +1,66 @@
 <div layout="column" layout-align="center center">
-  <md-card class="matchcard">
+  <md-card class="profile-card">
     <md-card-title>
       <md-card-title-text>
-        <span class="md-headline">{{user.firstName}} {{user.lastName}}</span>
-      </md-card-title-text>
-      <md-card-media>
-        <div class="md-media-sm card-media">
-          <img src="{{ user.pictureUrl ? user.pictureUrl : 'Images/default.png'}}">
+         <div class="flexbox-parent">
+            <div  layout="row" layout-align="space-between  start">
+               <md-input-container>
+                 <label>Firstname</label>
+                 <input ng-model="user.firstName">
+               </md-input-container>
+
+               <md-input-container>
+                 <label>LastName</label>
+                 <input ng-model="user.lastName">
+               </md-input-container>
+               <md-card-media>
+                 <div class="md-media-sm card-media">
+                    <label class="profile-label" for="attach-project-file">
+                       <img  class="profile-img" ng-src="{{profileImageData}}">
+                       <div ng-show="!profileImageData" class="filename"
+                        id="attached-project-file">
+                           Click to {{profileImageData ? "change" : "add"}} your profile picture
+                        </div>
+                     </label>
+                     <input id="attach-project-file" type="file" file-input='files'
+                     onchange="angular.element(this).scope().imageUpload(event)">
+                 </div>
+              </md-card-media>
+           </div>
         </div>
-      </md-card-media>
-    </md-card-title>
-    <md-card-content>
-      <div layout="row" layout-align="center left">
-      <span>Email: {{user.email}} Gender: {{user.gender}} Age: {{user.age}}<br></span>
-      </div>
-      <hr/>
-      <span><b>Introduction:</b> {{user.introduction}}</span>
-    </md-card-content>
-  </md-card>
-  <md-card class="matchcard">
+        <div>
+           <md-input-container>
+              <label>Email</label>
+              <input ng-model="user.email" type="email">
+           </md-input-container>
+        </div>
+        <div>
+           <label>Gender</label>
+           <md-input-container>
+             <button ng-disabled='user.gender !== "m"' class=" md-fab md-mini md-button md-ink-ripple" type="button"
+              ng-click="setGender('f')">
+               M
+            </button>
+            <button ng-disabled='user.gender !== "f"' class="md-fab md-mini md-button md-ink-ripple" type="button"
+             ng-click="setGender('m')">
+               F
+            </button>
+           </md-input-container>
+        </div>
+        <div>
+           <md-input-container>
+              <label>Age</label>
+              <input ng-model="user.age" type="number">
+           </md-input-container>
+        </div>
+   </md-card-title-text>
+</md-card-title>
+<md-card-content>
+   <hr/>
+<span><b>Introduction:</b> {{user.introduction}}</span>
+</md-card-content>
+</md-card>
+  <md-card class="profile-card">
     <div layout="row" layout-align="center center">
       <div flex="50">
         <md-card-content>
