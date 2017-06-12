@@ -19,7 +19,7 @@ router.get('/:usrId/Matches', function(req, res) {
 			keys.forEach(function(key) {
 				pairs.push(key + " = " + query[key]);
 			});
-			
+
 			var where = "";
 			if (pairs.length) {
 				where = ' where ' + pairs.join(" and ");
@@ -53,12 +53,18 @@ router.put('/:usrId/Matches/:mId', function(req, res) {
 
 	async.waterfall([
 	function(cb) {
-		if (vld.checkPrsOK(usrId, cb) && 
-			vld.check(!(body.saved && body.archived), 
+		if (vld.checkPrsOK(usrId, cb) &&
+			vld.check(!(body.saved && body.archived),
 			 Tags.badValue, ['saved', 'archived'], cb)) {
-			cnn.chkQry('update Matches set ? where id = ?', [body, mId], cb);
+         cnn.chkQry('select * from Matches where id = ? and newPerson = ?',
+          [mId, usrId], cb)
 		}
-	}],
+	},
+   function(matchResult, fields, cb) {
+      if (vld.check(matchResult.length, Tags.notFound, null, cb)) {
+         cnn.chkQry('update Matches set ? where id = ?', [body, mId], cb);
+      };
+   }],
 	function(err) {
 		if (!err) {
 			res.status(200).end();
@@ -76,14 +82,14 @@ router.get('/:usrId/Matches/:mId', function(req, res) {
 	async.waterfall([
 	function(cb) {
 		if (vld.checkPrsOK(usrId, cb)) {
-			cnn.chkQry('select * from Matches where id = ? and ' + 
+			cnn.chkQry('select * from Matches where id = ? and ' +
 			 'newPerson = ?', [mId, usrId], cb);
 		}
 	},
 	function(match, fields, cb) {
 		if (vld.check(match.length, Tags.notFound, null, cb)) {
 			cnn.chkQry('select M.id, score, firstName, lastName, email, ' +
-			 ' gender, age, introduction, pictureUrl from Matches M JOIN User' + 
+			 ' gender, age, introduction, pictureUrl from Matches M JOIN User' +
 			 ' U ON M.newPerson = U.id where M.id = ?', [mId], cb);
 		}
 	},
