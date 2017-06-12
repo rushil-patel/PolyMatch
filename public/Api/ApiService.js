@@ -3,7 +3,7 @@ function($http) {
 
    return {
       getDorms: function() {
-         return $http.get("Hobbies/")
+         return $http.get("Dorms/")
           .then(function(response) {
              return response.data;
           })
