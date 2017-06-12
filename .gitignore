@@ -1,3 +1,4 @@
 node_modules
 Routes/connection.json
 public/bower_components
+/images

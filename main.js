@@ -13,7 +13,7 @@ var app = express();
 //app.use(function(req, res, next) {console.log("Hello"); next();});
 // Static paths to be served like index.html and all client side js
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use("/images", express.static("images"));
 // Parse all request bodies using JSON
 app.use(bodyParser.json());
 
