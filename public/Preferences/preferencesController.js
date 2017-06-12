@@ -2,11 +2,17 @@ app.controller('preferencesController',
  ['$q', '$scope', '$state', 'notifyDlg', 'api', 'dormList', 'majorList',
  function($q, $scope, $state, nDlg, api, dormList, majorList) {
 
+    $scope.preferences = {};
+
     $scope.dormList = dormList;
     $scope.dormSearch = "";
+    //attach to preference
+    $scope.preferences.dorm = {};
 
     $scope.majorList = majorList;
     $scope.majorSearch = "";
+    //attach to preference
+    $scope.preferences.major = {};
 
     //Hobby Chips
     $scope.selectedItem = null;
@@ -30,26 +36,47 @@ app.controller('preferencesController',
       }];
     $scope.userHobbies = [];
 
-    $scope.gradesRatio = 50;
+    $scope.preferences.gradesRatio = 50;
     $scope.gradesRatioUpdate = function() {
-      $scope.socialRatio = 100 - $scope.gradesRatio;
+      $scope.socialRatio = 100 - $scope.preferences.gradesRatio;
    };
-    $scope.socialRatio = 50;
+    $scope.socialRatio = 100 - $scope.preferences.gradesRatio;
     $scope.socialRatioUpdate = function() {
-      $scope.gradesRatio = 100 - $scope.socialRatio;
+      $scope.preferences.gradesRatio = 100 - $scope.socialRatio;
    };
 
-   $scope.quite = false;
-   $scope.greekLife = false;
-   $scope.smoking = false;
-   $scope.drinking = false;
-
-   $scope.sleepHour = 11;
-   $scope.wakeHour = 9;
    $scope.sleepMeridien = "pm";
    $scope.wakeMeridien = "am";
-   $scope.cleanliness = 3;
+   
+   $scope.savePreferences = function() {
+    var preferences = {
+      dormName: $scope.selectedDorm.id,
+      major: $scope.selectedMajor.id,
+      gradesRatio: $scope.gradesRatio,
+      quiet: $scope.quiet,
+      greekLife: $scope.greekLife,
+      smoking: $scope.smoking,
+      drinking: $scope.drinking,
+      cleanliness: $scope.cleanliness
+    };
+    var sleep = $scope.sleepHour;
+    var wake = $scope.wakeHour;
 
+    if ($scope.sleepMeridien === "pm" && sleep != 12) {
+      sleep += 12;
+    }
+    if ($scope.wakeMeridien === "pm" && wake != 12) {
+      wake += 12;
+    }
+    if ($scope.wakeMeridien === "am" && wake == 12) {
+      wake = wake % 12;
+    }
+    if ($scope.sleepMeridien === "am" && sleep == 12) {
+      wake = wake % 12;
+    }
+
+
+   };
 
     $scope.queryDorm = function(search) {
       var filteredDorms = dormList.filter(function(item) {
@@ -88,7 +115,7 @@ app.controller('preferencesController',
    $scope.createFilterFor = function(search) {
       var lowercaseQuery = angular.lowercase(search);
       return function filterFunc(hobby) {
-        return hobby.name.toLowerCase().indexOf(lowercaseQuery) === 0;
+        return hobby.name.toLowerCase().indexOf(lowercaseQuery) >= 0;
       }
    };
 
