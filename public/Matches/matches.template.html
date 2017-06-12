@@ -3,7 +3,7 @@
 	<md-list>
 		<md-list-item ng-repeat="match in matches">
 			<div flex="80">
-				<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+				<md-card md-theme-watch>
 	        <md-card-title>
 	          <md-card-title-text>
 	            <span class="md-headline">{{match.firstName}} {{match.lastName}}</span>
@@ -22,12 +22,28 @@
 	          </md-card-title-media>
 	        </md-card-title>
 	        <md-card-content>
-	        	<p>{{match.introduction}}</p>
+	        	<div layout="column" layout-align="center left">
+		        	<div flex>
+		        		<p>{{match.introduction}}</p>
+		        	</div>
+		        	<div flex>
+		        		<p ng-if="match.notes && !match.newNote"> Note: {{match.notes}} </p>
+			        	<md-input-container ng-if="match.newNote" name="note" flex="70">
+		                <label>Note: </label>
+		                <input name="note" ng-model="match.notes">
+		                <md-button ng-click="submitNote($index, match.notes)">Submit Note</md-button>
+		            </md-input-container>
+		        	</div>
+		        </div>
 	        </md-card-content>
 	        <md-card-actions layout="row" layout-align="end center">
-	          <md-button ng-click="saveMatch(match.matchId)">Save</md-button>
-	          <md-button ng-click="hideMatch(match.matchId)">Hide</md-button>
-	          <md-button>Add Note</md-button>
+	          <md-button ng-if="!match.saved" ng-click="saveMatch(match.matchId, true)">Save</md-button>
+	          <md-button ng-if="match.saved" ng-click="saveMatch(match.matchId, false)">Remove Save</md-button>
+	          <md-button ng-if="!match.archived" ng-click="hideMatch(match.matchId, true)">Archive</md-button>
+	          <md-button ng-if="match.archived" ng-click="hideMatch(match.matchId, false)">Unarchive</md-button>
+	          <md-button ng-if="!match.notes && !match.newNote" ng-click="addNote($index)">Add Note</md-button>
+	          <md-button ng-if="match.notes" ng-click="addNote($index)">Edit Note</md-button>
+	          <md-button ng-if="match.notes" ng-click="submitNote($index, '')">Remove Note</md-button>
 	        </md-card-actions>
 	      </md-card>
 	    </div>
