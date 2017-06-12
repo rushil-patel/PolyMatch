@@ -3,6 +3,7 @@ app.controller('registerController',
  function($q, $http, $scope, $state, nDlg, api, login) {
     $scope.user = {};
     $scope.confPass = null;
+    $scope.errors = [];
 
     $scope.registerUser = function() {
       $http.post("Users", $scope.user)
@@ -23,7 +24,10 @@ app.controller('registerController',
       })
       .catch(function(error) {
          console.log(error);
-         $scope.errors = error
+         if (error)
+          $scope.errors = error.data;
+         else
+          $state.go('home');
       })
    }
 }]);
