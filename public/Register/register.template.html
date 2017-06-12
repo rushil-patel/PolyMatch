@@ -67,7 +67,7 @@
 		<label>
 			Introduction
 		</label>
-		<textarea ng-model="user.introduction" rows="3" md-select-on-focus>
+		<textarea ng-model="user.introduction" rows="1" md-select-on-focus>
 		</textarea>
 		</md-input-container>
 		<md-input-container class="md-block">
@@ -75,7 +75,9 @@
 			Do you accept the terms and conditions?
 		</md-checkbox>
 		</md-input-container>
-		<md-button class="md-primary md-raised">Submit</md-button>
+		<md-button class="md-primary md-raised" ng-click="registerUser()">
+         Submit
+      </md-button>
 		<md-button class="md-warn md-raised">Cancel</md-button>
 	</form>
 </div>

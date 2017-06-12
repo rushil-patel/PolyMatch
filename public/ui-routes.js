@@ -11,7 +11,8 @@ app.config(['$stateProvider', '$urlRouterProvider',
       })
       .state('register', {
       	url: '/register',
-      	templateUrl: '/Register/register.template.html'
+      	templateUrl: '/Register/register.template.html',
+         controller: 'registerController'
       })
       .state('login', {
          url: '/login',
@@ -39,7 +40,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
             matches: ['$q', '$http', 'login',
              function($q, $http, login) {
                console.log('in function');
-               return $http.get('/Users/' + login.getUser().id + 
+               return $http.get('/Users/' + login.getUser().id +
                   '/Matches?saved=0&&archived=0')
                .then(function(response) {
                   console.log('getting new matches');
@@ -56,7 +57,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
             matches: ['$q', '$http', 'login',
              function($q, $http, login) {
                console.log('in function');
-               return $http.get('/Users/' + login.getUser().id + 
+               return $http.get('/Users/' + login.getUser().id +
                   '/Matches?saved=1')
                .then(function(response) {
                   console.log('getting new matches');
@@ -72,7 +73,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
          resolve: {
             matches: ['$q', '$http', 'login',
              function($q, $http, login) {
-               return $http.get('/Users/' + login.getUser().id + 
+               return $http.get('/Users/' + login.getUser().id +
                   '/Matches?archived=1')
                .then(function(response) {
                   return response.data;
