@@ -72,11 +72,9 @@ app.config(['$stateProvider', '$urlRouterProvider',
          resolve: {
             matches: ['$q', '$http', 'login',
              function($q, $http, login) {
-               console.log('in function');
                return $http.get('/Users/' + login.getUser().id + 
                   '/Matches?archived=1')
                .then(function(response) {
-                  console.log('getting new matches');
                   return response.data;
                });
             }]

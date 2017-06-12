@@ -1,36 +1,45 @@
 app.controller('matchesController',
  ['$scope', '$state', '$http', 'login', 'notifyDlg', 'matches',
    function($scope, $state, $http, login, nDlg, matches) {
-   	$scope.matches = matches;
-
+   	
    	for (var match in matches) {
-   		console.log(matches[match]);
    		if (matches[match].pictureUrl === null) {
    			matches[match].pictureUrl = 'Images/default.png';
    		}
    	}
 
-   	$scope.saveMatch = function(matchId) {
-   		console.log('saving');
+   	$scope.matches = matches;
+
+   	$scope.saveMatch = function(matchId, boolean) {
 
    		$http.put('Users/' + login.getUser().id + '/Matches/' + matchId, 
-   		 {'saved': true}).then(function(response) {
-   		 	console.log('going back');
+   		 {'saved': boolean}).then(function(response) {
    		 	$state.reload();
    		 }).catch(function(err) {
    		 	console.log('not saved');
    		 });
    	};
 
-   	$scope.hideMatch = function(matchId) {
-   		console.log('hiding');
+   	$scope.hideMatch = function(matchId, boolean) {
 
    		$http.put('Users/' + login.getUser().id + '/Matches/' + matchId, 
-   		 {'archived': true}).then(function(response) {
-   		 	console.log('going back');
+   		 {'archived': boolean}).then(function(response) {
    		 	$state.reload();
    		 }).catch(function(err) {
    		 	console.log('not hidden');
    		 });
    	};
+
+   	$scope.addNote = function(index) {
+   		matches[index].newNote = true;
+   	};
+
+   	$scope.submitNote = function(index, note) {
+   		matches[index].newNote = false;
+   		$http.put('Users/' + login.getUser().id + '/Matches/' + matches[index].matchId,
+   		 {'notes': note}).then(function(response) {
+   		 	$state.reload();
+   		 });
+   	};
+
 }]);
