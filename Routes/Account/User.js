@@ -69,7 +69,7 @@ router.put("/:usrId", function(req, res) {
    var body = req.body;
    var admin = req.session.isAdmin();
    var cnn = req.cnn;
-   var usrId = req.params.userId;
+   var usrId = req.params.usrId;
    async.waterfall([
    function(cb) {
       if (vld.checkPrsOK(usrId, cb) &&
@@ -77,13 +77,13 @@ router.put("/:usrId", function(req, res) {
        "age", "introduction", "password", "oldPassword"], cb) &&
        vld.check((!body.password && body.password != "") || body.oldPassword ||
        admin, Tags.noOldPwd, null, cb)) {
-          cnn.chkQry("select * from User where id = ?", usrId);
+          cnn.chkQry("select * from User where id = ?", usrId, cb);
        }
    },
    function(usersResult, fields, cb) {
       if (vld.check(usersResult.length, Tags.notFound, null, cb)) {
          delete body.oldPassword;
-         cnn.chkQry("update User set ? where = ?", [body, usrId], cb)
+         cnn.chkQry("update User set ? where id = ?", [body, usrId], cb)
       }
    },
    function(result, fields, cb) {
