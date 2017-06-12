@@ -1,6 +1,8 @@
 app.controller('matchesController',
  ['$scope', '$state', '$http', 'login', 'notifyDlg', 'matches',
    function($scope, $state, $http, login, nDlg, matches) {
+
+   	$scope.title = $state.current.data.title;
    	
    	for (var match in matches) {
    		if (matches[match].pictureUrl === null) {

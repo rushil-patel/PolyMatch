@@ -9,6 +9,45 @@ app.config(['$stateProvider', '$urlRouterProvider',
       .state('home',  {
          url: '/',
       })
+      .state('user', {
+         url: '/profile',
+         templateUrl: '/Preferences/profile.template.html',
+         controller: 'profileController',
+         resolve: {
+            user: ['$http', 'login',
+             function($http, login) {
+               return $http.get('/Users/' + login.getUser().id).then(function(response) {
+                  return response.data;
+               });
+             }],
+            preferences: ['$http', 'login',
+             function($http, login) {
+               return $http.get('/Users/' + login.getUser().id + '/Prefs').then(function(response) {
+                  return response.data;
+               });
+             }]
+         }
+      })
+      .state('profile', {
+         url: '/profile/:usrId',
+         templateUrl: '/Preferences/profile.template.html',
+         controller: 'profileController',
+         resolve: {
+            user: ['$http', '$stateParams', 'login',
+             function($http, $stateParams, login) {
+               console.log($stateParams.usrId);
+               return $http.get('/Users/' + $stateParams.usrId).then(function(response) {
+                  return response.data;
+               });
+             }],
+            preferences: ['$http', '$stateParams', 'login',
+             function($http, $stateParams, login) {
+               return $http.get('/Users/' + $stateParams.usrId + '/Prefs').then(function(response) {
+                  return response.data;
+               });
+             }]
+         }
+      })
       .state('register', {
       	url: '/register',
       	templateUrl: '/Register/register.template.html'
@@ -35,14 +74,15 @@ app.config(['$stateProvider', '$urlRouterProvider',
          url: '/matches',
          templateUrl: 'Matches/matches.template.html',
          controller: 'matchesController',
+         data: {
+            title: 'New Matches!'
+         },
          resolve: {
             matches: ['$q', '$http', 'login',
              function($q, $http, login) {
-               console.log('in function');
                return $http.get('/Users/' + login.getUser().id + 
                   '/Matches?saved=0&&archived=0')
                .then(function(response) {
-                  console.log('getting new matches');
                   return response.data;
                });
             }]
@@ -52,14 +92,15 @@ app.config(['$stateProvider', '$urlRouterProvider',
          url: '/matches',
          templateUrl: 'Matches/matches.template.html',
          controller: 'matchesController',
+         data: {
+            title: 'Saved Matches!'
+         },
          resolve: {
             matches: ['$q', '$http', 'login',
              function($q, $http, login) {
-               console.log('in function');
                return $http.get('/Users/' + login.getUser().id + 
                   '/Matches?saved=1')
                .then(function(response) {
-                  console.log('getting new matches');
                   return response.data;
                });
             }]
@@ -69,6 +110,9 @@ app.config(['$stateProvider', '$urlRouterProvider',
          url: '/matches',
          templateUrl: 'Matches/matches.template.html',
          controller: 'matchesController',
+         data: {
+            title: 'Archived Matches!'
+         },
          resolve: {
             matches: ['$q', '$http', 'login',
              function($q, $http, login) {

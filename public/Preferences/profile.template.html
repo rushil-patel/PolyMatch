@@ -1,0 +1,59 @@
+<div layout="column" layout-align="center center">
+  <md-card>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">{{user.firstName}} {{user.lastName}}</span>
+      </md-card-title-text>
+      <md-card-media>
+        <div class="md-media-sm card-media">
+          <img src="{{ user.pictureUrl ? user.pictureUrl : 'Images/default.png'}}">
+        </div>
+      </md-card-media>
+    </md-card-title>
+    <md-card-content>
+      <div layout="row" layout-align="center left">
+      <span>Email: {{user.email}} Gender: {{user.gender}} Age: {{user.age}}<br></span>
+      </div>
+      <hr/>
+      <span><b>Introduction:</b> {{user.introduction}}</span>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <div layout="row" layout-align="center center">
+      <div flex="50">
+        <md-card-content>
+          <span> Dorm: {{preferences.dormName}} </span>
+        </md-card-content>
+        <md-card-content>
+          <span> Major: {{preferences.major}}</span>
+        </md-card-content>
+        <md-card-content>
+          <span> Grades: {{preferences.gradesRatio}}%  Social: {{(100-preferences.gradesRatio)}}%</span>
+        </md-card-content>
+        <md-card-content>
+          <span> Quiet: {{preferences.quiet ? 'Yes' : 'No'}}</span>
+        </md-card-content>
+        <md-card-content>
+          <span> Greek life: {{preferences.greekLife ? 'Yes' : 'No'}}</span>
+        </md-card-content>
+      </div>
+      <div flex="50">
+        <md-card-content>
+          <span> Smoking: {{preferences.smoking ? 'Yes' : 'No'}}</span>
+        </md-card-content>
+        <md-card-content>
+          <span> Drinking: {{preferences.drinking ? 'Yes' : 'No'}}</span>
+        </md-card-content>
+        <md-card-content>
+          <span> Wake Time: {{preferences.wakeTime}}</span>
+        </md-card-content>
+        <md-card-content>
+          <span>Sleep Time: {{preferences.sleepTime}}</span>
+        </md-card-content>
+        <md-card-content>
+          <span> Cleanliness: {{preferences.cleanliness}}/5</span>
+        </md-card-content>
+      </div>
+    </div>
+  </md-card>
+</div>
