@@ -10,7 +10,7 @@
 
       <span>Which dormitory do you prefer?</span>
       <md-card-content>
-         <md-autocomplete placeholder="type in a dormitrory" md-selected-item="selectedDorm" md-search-text="dormSearch" md-items="item in queryDorm(dormSearch)" md-item-text="item.name">
+         <md-autocomplete placeholder="type in a dormitrory" md-selected-item="preferences.dorm" md-search-text="dormSearch" md-items="item in queryDorm(dormSearch)" md-item-text="item.name">
             <span md-highlight-text="searchText">{{item.name}}</span>
          </md-autocomplete>
       </md-card-content>
@@ -18,7 +18,7 @@
 
      <span>What's your major?</span>
      <md-card-content>
-        <md-autocomplete placeholder="type in a major" md-selected-item="selectedMajor" md-search-text="majorSearch" md-items="item in queryMajor(majorSearch)" md-item-text="item.name">
+        <md-autocomplete placeholder="type in a major" md-selected-item="preferences.major" md-search-text="majorSearch" md-items="item in queryMajor(majorSearch)" md-item-text="item.name">
            <span md-highlight-text="searchText">{{item.name}}</span>
         </md-autocomplete>
      </md-card-content>
@@ -30,10 +30,10 @@
          <div flex="10" layout layout-align="center center">
            <span class="md-body-1">Grades</span>
          </div>
-         <md-slider ng-model="gradesRatio" ng-change="gradesRatioUpdate()" min="0" max="100" aria-label="regular slider"></md-slider>
+         <md-slider ng-model="preferences.gradesRatio" ng-change="gradesRatioUpdate()" min="0" max="100" aria-label="regular slider"></md-slider>
 
          <md-input-container>
-           <input flex type="number" ng-model="gradesRatio" ng-change="gradesRatioUpdate()" aria-label="regular-slider">
+           <input flex type="number" ng-model="preferences.gradesRatio" ng-change="gradesRatioUpdate()" aria-label="regular-slider">
          </md-input-container>
        </md-slider-container>
        <md-slider-container>
@@ -51,23 +51,23 @@
 
    <span>Do you prefer a quiet environment?</span>
    <md-card-content>
-      <md-switch ng-model="quiet" aria-label="Switch 1"></md-switch>
+      <md-switch ng-model="preferences.quiet" aria-label="Switch 1"></md-switch>
    </md-card-content>
 
 
    <span>Do you participating in Greek life?</span>
    <md-card-content>
-      <md-switch ng-model="greekLife" aria-label="Switch 1"></md-switch>
+      <md-switch ng-model="preferences.greekLife" aria-label="Switch 1"></md-switch>
    </md-card-content>
 
    <span>Do you smoke?</span>
    <md-card-content>
-      <md-switch ng-model="smoking" aria-label="Switch 1"></md-switch>
+      <md-switch ng-model="preferences.smoking" aria-label="Switch 1"></md-switch>
    </md-card-content>
 
    <span>Do you like to drink?</span>
    <md-card-content>
-      <md-switch ng-model="drinking" aria-label="Switch 1"></md-switch>
+      <md-switch ng-model="preferences.drinking" aria-label="Switch 1"></md-switch>
    </md-card-content>
 
    <span>What time do you usually go to sleep?</span>
@@ -75,7 +75,7 @@
       <div layout-gt-sm="row">
          <md-input-container>
            <label>sleep time</label>
-           <input ng-model="sleepHour" type="number">
+           <input ng-model="preferences.sleepHour" type="number">
         </md-input-container>
         <md-input-container>
            <md-select ng-model="sleepMeridien" placeholder="{{sleepMeridien}}"
@@ -93,7 +93,7 @@
      <div layout-gt-sm="row">
         <md-input-container>
          <label>sleep time</label>
-         <input ng-model="wakeHour" type="number">
+         <input ng-model="preferences.wakeHour" type="number">
         </md-input-container>
         <md-input-container>
            <md-select ng-model="wakeMeridien" placeholder="{{wakeMeridien}}"
@@ -130,6 +130,10 @@
       </md-chip-template>
     </md-chips>
   </md-card-content>
+
+  <md-card-actions>
+    <md-button class="md-primary md-raised">Save</md-button>
+  </md-card-actions>
 
    </md-card-content>
    </md-card>
