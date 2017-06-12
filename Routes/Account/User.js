@@ -4,6 +4,8 @@ var router = Express.Router({caseSensitive: true});
 var async = require('async');
 var mysql = require('mysql');
 var cnnConfig = require('../connection.json');
+var storageConfig = require('../storage.json');
+var base64Img = require('base64-img');
 router.baseURL = '/Users';
 
 router.use('/', require('../Matches/Matches.js'));
@@ -28,7 +30,7 @@ router.post("/", function(req, res) {
       if (vld.check(!existingUser.length, Tags.dupEmail, null, cb)) {
          body.whenRegistered = body.termsAccepted = new Date();
          delete body.picture;
-         console.log(body);
+
          cnn.chkQry('insert into User set ?', body, cb);
       }
    },
@@ -83,7 +85,15 @@ router.put("/:usrId", function(req, res) {
    function(usersResult, fields, cb) {
       if (vld.check(usersResult.length, Tags.notFound, null, cb)) {
          delete body.oldPassword;
-         cnn.chkQry("update User set ? where id = ?", [body, usrId], cb)
+         base64Img.img(body.picture, storageConfig.images.profile, usrId,
+          function(err, filePath) {
+             if (err) {
+                return cb(err);
+             }
+             delete body.picture;
+             body.pictureUrl = req.headers.host + '/' + filePath;
+             cnn.chkQry("update User set ? where id = ?", [body, usrId], cb)
+          });
       }
    },
    function(result, fields, cb) {

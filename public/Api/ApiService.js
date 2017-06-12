@@ -42,6 +42,13 @@ function($http) {
                 }
              ]
           })
+      },
+
+      register: function(newUser) {
+         return $http.post("User", newUser)
+          .then(function(response) {
+             return response.data;
+          });
       }
    };
 }]);
