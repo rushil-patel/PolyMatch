@@ -9,7 +9,7 @@ router.get('/:usrId/Hobbies', function(req, res) {
 	var user = req.params.usrId;
 	var cnn = req.cnn;
    var vld = req.validator;
-	var query = 'select HE.name as name'
+	var query = 'select *'
 	 + ' from Hobbies H join HobbyEnum HE on H.hobbyId = HE.id'
 	 + ' where H.userId = ? order by HE.id asc';
 
@@ -37,7 +37,8 @@ router.post('/:usrId/Hobbies', function(req, res) {
    var cnn = req.cnn;
    var body = req.body;
    var vld = req.validator;
-   var update = 'insert into Hobbies set ?';
+   var update = 'insert into Hobbies (userId, hobbyId) values ?';
+   var hobbyFoundList, errorRes, batch;
 
    async.waterfall([
    function(cb) {
@@ -45,13 +46,19 @@ router.post('/:usrId/Hobbies', function(req, res) {
          cnn.chkQry('select id from User where id = ?', [user], cb);
    },
    function(prs, fields, cb) {
-      if (vld.check(prs.length, Tags.notFound, ["user"], cb))
-         cnn.chkQry("select id from HobbyEnum where id = ?", [body.hobbyId], cb);
+      if (vld.check(prs.length, Tags.notFound, ["user"], cb)) {
+         hobbyFoundList = body.map(function(hobbyObj) {
+            return hobbyObj.id;
+         });
+         cnn.chkQry("select * from HobbyEnum where id in (?)", [hobbyFoundList], cb);
+      }
    },
    function(hobby, fields, cb) {
-      if (vld.check(hobby.length, Tags.notFound, ["hobby"], cb)) {
-         body.userId = user;
-         cnn.chkQry(update, [body], cb);
+      if (vld.check(hobby.length == body.length, Tags.notFound, ["hobby"], cb)) {
+         batch = body.map(function(hobbyObj) {
+            return [user, hobbyObj.id];
+         });
+         cnn.chkQry(update, [batch], cb);
       }
    }],
    function(err) {

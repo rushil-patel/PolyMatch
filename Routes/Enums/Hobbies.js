@@ -23,19 +23,33 @@ router.post('/', function(req, res) {
 	var vld = req.validator;
 	var cnn = req.cnn;
 	var body = req.body;
+	var errorRes;
+	var batch;
 
 	async.waterfall([
 	function(cb) {
-		cnn.chkQry('select * from HobbyEnum where name = ?',
-		 [body.name], cb);
+		cnn.chkQry('select * from HobbyEnum where name in (?)',
+		 [body], cb);
 	},
 	function(result, fields, cb) {
-		if (vld.check(!result.length, Tags.dupHobby, null, cb))
-			cnn.chkQry('insert into HobbyEnum set ?', [req.body], cb);
+		if (result.length) {
+			errorRes = result.map(function(hobbyObj) {
+				return hobbyObj.name;
+			});
+		}
+		if (vld.check(!result.length, Tags.dupHobby, errorRes, cb)) {
+			batch = body.map(function(name) {
+				return [name];
+			});
+			cnn.chkQry('insert into HobbyEnum (name) values ?', [batch], cb);
+		}
 	},
    function(result, fields, cb) {
-      res.location(router.baseURL + '/' + result.insertId).end();
-      cb()
+   	  cnn.chkQry('select * from HobbyEnum where name in (?)', [body], cb);
+   },
+   function(result, fields, cb) {
+   	res.json(result);
+   	cb();
    }],
 	function(err) {
 		cnn.release();

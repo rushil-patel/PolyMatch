@@ -7,7 +7,7 @@ app.controller('preferencesController',
     $scope.dormList = dormList;
     $scope.dormSearch = "";
     //attach to preference
-    $scope.preferences.dorm = {};
+    $scope.preferences.dorm = {id: 1, name: "test"};
 
     $scope.majorList = majorList;
     $scope.majorSearch = "";
