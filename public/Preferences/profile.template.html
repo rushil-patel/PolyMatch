@@ -6,16 +6,15 @@
             <div  layout="row" layout-align="space-between  start">
                <md-input-container>
                  <label>Firstname</label>
-                 <input ng-model="user.firstName">
+                 <input ng-disabled="!isEditable" ng-model="user.firstName">
                </md-input-container>
-               <span>{{hasEditedUser()}}</span>
                <md-input-container>
                  <label>LastName</label>
-                 <input ng-model="user.lastName">
+                 <input ng-disabled="!isEditable" ng-model="user.lastName">
                </md-input-container>
                <md-card-media>
                  <div class="md-media-sm card-media">
-                    <label class="profile-label" for="attach-project-file">
+                    <label ng-class="{'profile-label': isEditable}" for="attach-project-file">
                        <img  class="profile-img"
                         ng-src="{{user.picture || user.pictureUrl}}">
                        <div ng-show="!user.picture && !user.pictureUrl"
@@ -23,7 +22,7 @@
                            Click to add your profile picture
                         </div>
                      </label>
-                     <input id="attach-project-file" type="file" file-input='files'
+                     <input ng-disabled="!isEditable" id="attach-project-file" type="file" file-input='files'
                      onchange="angular.element(this).scope().imageUpload(event)">
                  </div>
               </md-card-media>
@@ -38,11 +37,15 @@
         <div>
            <label>Gender</label>
            <md-input-container>
-             <button ng-disabled='user.gender !== "m"' class=" md-fab md-mini md-button md-ink-ripple" type="button"
+             <button ng-show='user.gender === "m" || isEditable'
+              ng-disabled='!isEditable || user.gender !== "m"'
+              class="md-fab md-mini md-button md-ink-ripple" type="button"
               ng-click="setGender('f')">
                M
             </button>
-            <button ng-disabled='user.gender !== "f"' class="md-fab md-mini md-button md-ink-ripple" type="button"
+            <button ng-show='user.gender === "f" || isEditable'
+             ng-disabled='!isEditable || user.gender !== "f"'
+             class="md-fab md-mini md-button md-ink-ripple" type="button"
              ng-click="setGender('m')">
                F
             </button>
@@ -51,7 +54,7 @@
         <div>
            <md-input-container>
               <label>Age</label>
-              <input ng-model="user.age" type="number">
+              <input ng-disabled="!isEditable" ng-model="user.age" type="number">
            </md-input-container>
         </div>
    </md-card-title-text>
@@ -60,13 +63,13 @@
    <hr/>
    <span><b>Introduction:</b></span>
    <md-input-container class="md-block">
-      <textarea ng-model="user.introduction" rows="1" md-select-on-focus>
+      <textarea ng-disabled="!isEditable" ng-model="user.introduction" rows="1" md-select-on-focus>
       </textarea>
    </md-input-container>
-   <md-button ng-show="hasEditedUser()" ng-click="saveUserChanges()" class="md-raised">
+   <md-button ng-show="isEditable && hasEditedUser()" ng-click="saveUserChanges()" class="md-raised">
       Save
    </md-button>
-   <md-button ng-show="hasEditedUser()" ng-click="restoreUser()" class="md-raised md-warn">
+   <md-button ng-show="isEditable && hasEditedUser()" ng-click="restoreUser()" class="md-raised md-warn">
       Reset
    </md-button>
 </md-card-content>
