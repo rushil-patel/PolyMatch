@@ -85,16 +85,24 @@ router.put("/:usrId", function(req, res) {
    function(usersResult, fields, cb) {
       if (vld.check(usersResult.length, Tags.notFound, null, cb)) {
          delete body.oldPassword;
-         base64Img.img(body.picture, storageConfig.images.profile, usrId,
-          function(err, filePath) {
-             if (err) {
-                return cb(err);
-             }
-             delete body.picture;
-             body.pictureUrl = req.headers.host + '/' + filePath;
-             cnn.chkQry("update User set ? where id = ?", [body, usrId], cb)
-          });
-      }
+         if (body.picture) {
+            base64Img.img(body.picture, storageConfig.images.profile, usrId,
+            function(err, filePath) {
+               if (err) {
+                  cb(err);
+               }
+               delete body.picture;
+               body.pictureUrl = '/' + filePath;
+               cb(null)
+            });
+         }
+         else {
+            cb(null);
+         }
+      };
+   },
+   function(cb) {
+      cnn.chkQry("update User set ? where id = ?", [body, usrId], cb);
    },
    function(result, fields, cb) {
       res.status(200).end();

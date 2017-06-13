@@ -8,7 +8,7 @@
                  <label>Firstname</label>
                  <input ng-model="user.firstName">
                </md-input-container>
-
+               <span>{{hasEditedUser()}}</span>
                <md-input-container>
                  <label>LastName</label>
                  <input ng-model="user.lastName">
@@ -16,10 +16,11 @@
                <md-card-media>
                  <div class="md-media-sm card-media">
                     <label class="profile-label" for="attach-project-file">
-                       <img  class="profile-img" ng-src="{{profileImageData}}">
-                       <div ng-show="!profileImageData" class="filename"
-                        id="attached-project-file">
-                           Click to {{profileImageData ? "change" : "add"}} your profile picture
+                       <img  class="profile-img"
+                        ng-src="{{user.picture || user.pictureUrl}}">
+                       <div ng-show="!user.picture && !user.pictureUrl"
+                        class="filename" id="attached-project-file">
+                           Click to add your profile picture
                         </div>
                      </label>
                      <input id="attach-project-file" type="file" file-input='files'
@@ -31,7 +32,7 @@
         <div>
            <md-input-container>
               <label>Email</label>
-              <input ng-model="user.email" type="email">
+              <input ng-disabled="true" ng-model="user.email" type="email">
            </md-input-container>
         </div>
         <div>
@@ -57,8 +58,19 @@
 </md-card-title>
 <md-card-content>
    <hr/>
-<span><b>Introduction:</b> {{user.introduction}}</span>
+   <span><b>Introduction:</b></span>
+   <md-input-container class="md-block">
+      <textarea ng-model="user.introduction" rows="1" md-select-on-focus>
+      </textarea>
+   </md-input-container>
+   <md-button ng-show="hasEditedUser()" ng-click="saveUserChanges()" class="md-raised">
+      Save
+   </md-button>
+   <md-button ng-show="hasEditedUser()" ng-click="restoreUser()" class="md-raised md-warn">
+      Reset
+   </md-button>
 </md-card-content>
+
 </md-card>
   <md-card class="profile-card">
     <div layout="row" layout-align="center center">
