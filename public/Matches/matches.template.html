@@ -1,5 +1,22 @@
 <div layout="column" layout-align="center center">
   <h2> {{title}} </h2>
+
+  <div layout="row" layout-align="center stretch">
+    <md-input-container class="md-block" flex-gt-sm>
+      <label>Filter by</label>
+      <md-select ng-model="$scope.filter">
+        <md-option ng-repeat="filter in filters" value="{{filter.filter}}">
+          {{filter.filter}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container class="md-block" flex-gt-sm>
+      <label>Value</label>
+      <input type="email" ng-model="$scope.filterValue">
+    </md-input-container>
+    <md-button ng-click="filter()">Apply Filter</md-button>
+  </div>
+
   <md-list>
     <md-list-item ng-repeat="match in matches">
       <div flex="80">
