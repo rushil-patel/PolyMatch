@@ -3,6 +3,12 @@ app.controller('matchesController',
    function($scope, $state, $http, login, nDlg, matches) {
 
    	$scope.title = $state.current.data.title;
+   	$scope.filters = ('firstName lastName major dorm gradeRatio ' +
+   		'quiet greekLife smoking drinking wakeTime sleepTime ' +
+   		'cleanliness').split(' ').map(function(f) {
+        return {filter: f};
+      });
+   		console.log($scope.filters);
    	
    	for (var match in matches) {
    		if (matches[match].pictureUrl === null) {
