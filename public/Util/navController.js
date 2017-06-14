@@ -1,6 +1,6 @@
 app.controller('navController',
-   ['$scope', '$rootScope', '$state', '$cookies', 'login', 'notifyDlg',
-   function($scope, $rootScope, $state, $cookies, login, nDlg) {
+   ['$scope', '$rootScope', '$state', '$cookies', '$location', 'login', 'notifyDlg',
+   function($scope, $rootScope, $state, $cookies, location, login, nDlg) {
 
       login.getUser()
       .then(function(user) {
@@ -31,4 +31,8 @@ app.controller('navController',
       $scope.changeLang = function(lang) {
          $rootScope.lang = lang;
       };
+
+      $scope.getTabName = function() {
+         return $location.hash().replace(/(^#\/|\/$)/g, '');
+      }
 }]);

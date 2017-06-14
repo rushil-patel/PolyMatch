@@ -31,31 +31,40 @@
 
 <body ng-controller="navController" ng-app="mainApp">
   <md-nav-bar nav-bar-aria-label="navigation links">
-    <md-nav-item ng-if="!isLoggedIn()" md-nav-sref="login" name="loginLink">
+    <md-nav-item ng-if="!isLoggedIn()"  md-selected-nav-item="getTabName()"
+     md-nav-sref="login" name="loginLink">
       Login
     </md-nav-item>
-    <md-nav-item ng-if="!isLoggedIn()" md-nav-sref="register" name="registerLink">
+    <md-nav-item ng-if="!isLoggedIn()" md-selected-nav-item="getTabName()"
+     md-nav-sref="register" name="registerLink">
       Register
     </md-nav-item>
-    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="home" name="home">
+    <md-nav-item ng-if="isLoggedIn()" md-selected-nav-item="getTabName()"
+    md-nav-sref="home" name="home">
       Home
     </md-nav-item>
-    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="user" name="username">
+    <md-nav-item ng-if="isLoggedIn()" md-selected-nav-item="getTabName()"
+     md-nav-sref="user" name="username">
       My Profile
     </md-nav-item>
-    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="preferences", name="preferences">
+    <md-nav-item ng-if="isLoggedIn()" md-selected-nav-item="getTabName()"
+     md-nav-sref="preferences", name="preferences">
       Preferences
     </md-nav-item>
-    <md-nav-item ng-if="isLoggedIn()" md-nav-click="logout()" name="logout">
+    <md-nav-item ng-if="isLoggedIn()" md-selected-nav-item="getTabName()"
+     md-nav-click="logout()" name="logout">
       Logout
     </md-nav-item>
-    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="matches" name="matches">
+    <md-nav-item ng-if="isLoggedIn()" md-selected-nav-item="getTabName()"
+     md-nav-sref="matches" name="matches">
       My Matches
     </md-nav-item>
-    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="savedMatches" name="savedMatches">
+    <md-nav-item ng-if="isLoggedIn()" md-selected-nav-item="getTabName()"
+     md-nav-sref="savedMatches" name="savedMatches">
       Saved Matches
     </md-nav-item>
-    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="archivedMatches" name="archivedMatches">
+    <md-nav-item ng-if="isLoggedIn()" md-selected-nav-item="getTabName()"
+     md-nav-sref="archivedMatches" name="archivedMatches">
       Archived Matches
     </md-nav-item>
   </md-nav-bar>
