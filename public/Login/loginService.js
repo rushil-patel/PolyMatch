@@ -1,5 +1,5 @@
-app.factory("login", ["$http",
-function($http) {
+app.factory("login", ["$http", "$cookies"
+function($http, $cookies) {
    var cookie;
    var user;
 
@@ -10,6 +10,7 @@ function($http) {
             var location = response.headers().location.split('/');
 
             cookie = location[location.length - 1];
+            $cookies.pmAuth = cookie;
             return $http.get("Ssns/" + cookie);
          })
          .then(function(response) {

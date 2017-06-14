@@ -36,5 +36,6 @@
     "angular-marked": "^1.2.1",
     "angular-ui-codemirror": "^0.3.0",
     "angular-material": "^1.1.4",
+    "angular-cookies": "^1.6.4"
   }
 }
