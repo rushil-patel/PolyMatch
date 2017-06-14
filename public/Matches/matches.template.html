@@ -2,19 +2,25 @@
   <h2> {{title}} </h2>
 
   <div layout="row" layout-align="center stretch">
-    <md-input-container class="md-block" flex-gt-sm>
+    <md-input-container class="md-block" flex>
       <label>Filter by</label>
-      <md-select ng-model="$scope.filter">
+      <md-select ng-model="filterApplied.name">
         <md-option ng-repeat="filter in filters" value="{{filter.filter}}">
           {{filter.filter}}
         </md-option>
       </md-select>
     </md-input-container>
-    <md-input-container class="md-block" flex-gt-sm>
+    <md-input-container class="md-block" flex>
       <label>Value</label>
-      <input type="email" ng-model="$scope.filterValue">
+      <input ng-model="filterApplied.value">
     </md-input-container>
     <md-button ng-click="filter()">Apply Filter</md-button>
+  </div>
+  <div layout="row" layout-align="center stretch" ng-repeat="currentFilter in currentFilters">
+    <p>
+      Filter Applied: {{currentFilter.name}} = {{currentFilter.value}}
+    </p>
+    <md-button ng-click="removeFilter(currentFilter)">X</md-button>
   </div>
 
   <md-list>

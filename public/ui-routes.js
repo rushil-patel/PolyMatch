@@ -8,6 +8,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
       $stateProvider
       .state('home',  {
          url: '/',
+         // template: "<div><img src='Images/campus.jpeg' style='width:100%; height:100%;'></div>"
       })
       .state('user', {
          url: '/profile',
@@ -107,7 +108,8 @@ app.config(['$stateProvider', '$urlRouterProvider',
          templateUrl: 'Matches/matches.template.html',
          controller: 'matchesController',
          data: {
-            title: 'New Matches!'
+            title: 'New Matches!',
+            extraQuery: 'saved=0&&archived=0'
          },
          resolve: {
             matches: ['$http', 'login',
@@ -119,6 +121,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
                       return response.data;
                    });
                 });
+            }],
+            dormList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getDorms();
+            }],
+            majorList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getMajors();
             }]
          }
       })
@@ -127,18 +135,25 @@ app.config(['$stateProvider', '$urlRouterProvider',
          templateUrl: 'Matches/matches.template.html',
          controller: 'matchesController',
          data: {
-            title: 'Saved Matches!'
+            title: 'Saved Matches!',
+            extraQuery: 'saved=1'
          },
          resolve: {
             matches: ['$http', 'login',
             function($http, login) {
               return login.getUser()
                .then(function(user) {
-                  return $http.get('/Users/' + user.id + '/Matches?saved=0&&archived=0')
+                  return $http.get('/Users/' + user.id + '/Matches?saved=1')
                    .then(function(response) {
                      return response.data;
                   });
                });
+            }],
+            dormList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getDorms();
+            }],
+            majorList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getMajors();
             }]
          }
       })
@@ -147,7 +162,8 @@ app.config(['$stateProvider', '$urlRouterProvider',
          templateUrl: 'Matches/matches.template.html',
          controller: 'matchesController',
          data: {
-            title: 'Archived Matches!'
+            title: 'Archived Matches!',
+            extraQuery: 'archived=1'
          },
          resolve: {
             matches: ['$http', 'login',
@@ -159,6 +175,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
                     return response.data;
                  });
               });
+            }],
+            dormList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getDorms();
+            }],
+            majorList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getMajors();
             }]
          }
       });
