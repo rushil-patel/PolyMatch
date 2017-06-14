@@ -21,14 +21,17 @@ router.get('/:usrId/Prefs', function(req, res) {
       cnn.chkQry(query, [user], cb);
    },
    function(results, fields, cb) {
-      if (vld.check(results.length, Tags.notFound, null, cb)) {
+      if (results.length) {
        results[0].quiet = !!results[0].quiet;
        results[0].greekLife = !!results[0].greekLife;
        results[0].smoking = !!results[0].smoking;
        results[0].drinking = !!results[0].drinking;
        res.json(results);
-       cb();
       }
+      else {
+        res.json([]);
+      }
+      cb();
    }],
    function(err) {
       cnn.release();

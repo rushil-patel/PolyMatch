@@ -47,6 +47,41 @@ app.filter('tagError', ['errMaps', '$rootScope',
       };
 }]);
 
+app.filter('timeInputFilter', [function() {
+   return function(time) {
+      var timeDisplay = {};
+      if (time >= 12) {
+         timeDisplay.time = time - 12;
+         timeDisplay.meridien = "pm";
+      }
+      else if (time == 0) {
+         timeDisplay.time = 12;
+         timeDisplay.meridien = "am";
+      }
+      else {
+         timeDisplay.time = time;
+         timeDisplay.meridien = "am";
+      }
+      return timeDisplay;
+   }
+}]);
+
+app.filter('timeOutputFilter', [function() {
+   return function(time, meridien) {
+      var reqTime;
+      if (meridien === "am" && time == 12) {
+         reqTime = 0;
+      }
+      else if (meridien === "pm" && time != 12) {
+         reqTime = time + 12;
+      }
+      else {
+         reqTime = time;
+      }
+      return reqTime;
+   }
+}]);
+
 app.directive('cnvSummary', [function() {
    return {
       restrict: 'E',

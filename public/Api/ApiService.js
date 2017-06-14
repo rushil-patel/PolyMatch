@@ -41,7 +41,7 @@ function($http) {
                    name: "Poultry Management"
                 }
              ]
-          })
+          });
       },
 
       register: function(newUser) {
@@ -49,6 +49,13 @@ function($http) {
           .then(function(response) {
              return response.data;
           });
+      },
+
+      getHobbies: function() {
+        return $http.get("Hobbies/")
+         .then(function(response) {
+            return response.data;
+         });
       }
    };
 }]);

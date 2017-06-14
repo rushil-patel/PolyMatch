@@ -69,6 +69,19 @@ app.config(['$stateProvider', '$urlRouterProvider',
             }],
             majorList: ['$q', '$http', 'api', function($q, $http, api) {
                return api.getMajors();
+            }],
+            hobbyList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getHobbies();
+            }],
+            preferences: ['$q', '$http', 'login', function($q, $http, login) {
+               return $http.get('/Users/' + login.getUser().id + '/Prefs').then(function(response) {
+                  return response.data;
+               });
+            }],
+            userHobbies: ['$q', '$http', 'login', function($q, $http, login) {
+               return $http.get('/Users/' + login.getUser().id + '/Hobbies').then(function(response) {
+                  return response.data;
+               });
             }]
          }
       })

@@ -1,42 +1,64 @@
 app.controller('preferencesController',
- ['$q', '$scope', '$state', 'notifyDlg', 'api', 'dormList', 'majorList',
- function($q, $scope, $state, nDlg, api, dormList, majorList) {
+ ['$q', '$scope', '$state', 'notifyDlg', 'login', 'api', '$filter', '$http', 'dormList', 'majorList', 'hobbyList', 'preferences', 'userHobbies',
+ function($q, $scope, $state, nDlg, login, api, $filter, $http, dormList, majorList, hobbyList, preferences, userHobbies) {
 
-    $scope.preferences = {};
+    //Initialization code
+    $scope.errors = [];
 
     $scope.dormList = dormList;
     $scope.dormSearch = "";
     //attach to preference
-    $scope.preferences.dorm = {id: 1, name: "test"};
+    //$scope.preferences.dorm = {id: 1, name: "test"};
 
     $scope.majorList = majorList;
     $scope.majorSearch = "";
     //attach to preference
-    $scope.preferences.major = {};
+    //$scope.preferences.major = {};
 
     //Hobby Chips
     $scope.selectedItem = null;
     $scope.searchText = null;
-    $scope.hobbyList = [
-      {
-        id: 1,
-        name: "running"
-      },
-      {
-        id: 2,
-        name: "swimming"
-      },
-      {
-        id: 3,
-        name: "swearing"
-      },
-      {
-        id: 4,
-        name: "hiking"
-      }];
-    $scope.userHobbies = [];
+    $scope.hobbyList = hobbyList;
+    $scope.newUserHobbies = [];
 
-    $scope.preferences.gradesRatio = 50;
+    if (preferences.length) {
+      $scope.canUpdate = true;
+      $scope.preferences = preferences[0];
+      var index = 0, timeObject;
+
+      while (index < $scope.dormList.length && $scope.dormList[index].name !== preferences[0].dormName) {
+        index++;
+      }
+      $scope.selectedDorm = dormList[index];
+      index = 0;
+      while (index < $scope.majorList.length && $scope.majorList[index].name !== preferences[0].major) {
+        index++;
+      }
+      $scope.selectedMajor = majorList[index];
+
+      timeObject = $filter('timeInputFilter')(preferences[0].wakeTime);
+      $scope.preferences.wakeTime = timeObject.time;
+      $scope.wakeMeridien = timeObject.meridien;
+
+      timeObject = $filter('timeInputFilter')(preferences[0].sleepTime);
+      $scope.preferences.sleepTime = timeObject.time;
+      $scope.sleepMeridien = timeObject.meridien;
+
+      $scope.userHobbies = userHobbies;
+
+    }
+    else {
+      $scope.preferences = {};
+      $scope.canUpdate = false;
+      $scope.preferences.quiet = false;
+      $scope.preferences.greekLife = false;
+      $scope.preferences.smoking = false;
+      $scope.preferences.drinking = false;
+      $scope.preferences.gradesRatio = 50;
+      $scope.userHobbies = [];
+    }
+
+  
     $scope.gradesRatioUpdate = function() {
       $scope.socialRatio = 100 - $scope.preferences.gradesRatio;
    };
@@ -48,35 +70,102 @@ app.controller('preferencesController',
    $scope.sleepMeridien = "pm";
    $scope.wakeMeridien = "am";
    
+   var normalizeInput = function() {
+      var reqPrefs = Object.assign({}, $scope.preferences);
+      //var user = login.getUser().id;
+      //var newHobbies, existingHobbies;
+
+      delete reqPrefs.id;
+      delete reqPrefs.userId;
+
+      if ($scope.selectedDorm)
+        reqPrefs.dormName = $scope.selectedDorm.id;
+      if ($scope.selectedMajor)
+        reqPrefs.major = $scope.selectedMajor.id;
+
+      reqPrefs.wakeTime = $filter('timeOutputFilter')($scope.preferences.wakeTime, $scope.wakeMeridien);
+
+      reqPrefs.sleepTime = $filter('timeOutputFilter')($scope.preferences.sleepTime, $scope.sleepMeridien);
+
+      console.log(reqPrefs);
+      console.log("MODEL VVV");
+      console.log($scope.preferences);
+      console.log($scope.userHobbies);
+      return reqPrefs;
+   };
+
+   var postNewHobbies = function() {
+      var newHobbies;
+
+      newHobbies = $scope.userHobbies.filter(function(hobby) {
+        return hobby.id < 0;
+      });
+      newHobbies = newHobbies.map(function(hobbyObj) {
+        return hobbyObj.name;
+      });
+      //if (newHobbies.length)
+      return $http.post('/Hobbies', newHobbies);
+   };
+
+   var updateHobbiesForUser = function(response) {
+      var newUserHobbies = $scope.newUserHobbies;
+      var user = login.getUser().id;
+
+      newUserHobbies = newUserHobbies.concat(response.data);
+      return $http.post('/Users/' + user + '/Hobbies', newUserHobbies);
+   }
+
+   var clearErrorsOnSuccess = function(response) {
+      $scope.errors = [];
+   };
+
+   var reqErrorHandler = function(err) {
+      console.log('CATCH')
+      console.log(err.data);
+      if (err.data)
+        $scope.errors = err.data;
+   };
+
    $scope.savePreferences = function() {
-    var preferences = {
-      dormName: $scope.selectedDorm.id,
-      major: $scope.selectedMajor.id,
-      gradesRatio: $scope.gradesRatio,
-      quiet: $scope.quiet,
-      greekLife: $scope.greekLife,
-      smoking: $scope.smoking,
-      drinking: $scope.drinking,
-      cleanliness: $scope.cleanliness
-    };
-    var sleep = $scope.sleepHour;
-    var wake = $scope.wakeHour;
+   
+      var user = login.getUser().id;
 
-    if ($scope.sleepMeridien === "pm" && sleep != 12) {
-      sleep += 12;
-    }
-    if ($scope.wakeMeridien === "pm" && wake != 12) {
-      wake += 12;
-    }
-    if ($scope.wakeMeridien === "am" && wake == 12) {
-      wake = wake % 12;
-    }
-    if ($scope.sleepMeridien === "am" && sleep == 12) {
-      wake = wake % 12;
-    }
-
+      postNewHobbies().then(updateHobbiesForUser)
+      .then(function(response) {
+         $scope.newUserHobbies = [];
+      })
+      .then(function(response) {
+         return $http.post('/Users/' + user + '/Prefs', normalizeInput());
+      })
+      .then(function(response) {
+         $state.go('user');
+      })
+      .catch(reqErrorHandler);
 
    };
+
+   var refreshHobbies = function() {
+      $http.get('/Hobbies');
+   };
+
+   $scope.updatePreferences = function() {
+
+      var user = login.getUser().id;
+
+      postNewHobbies().then(updateHobbiesForUser)
+      .then(function(response) {
+         return $http.put('/Users/' + user + '/Prefs', normalizeInput());
+      })
+      .then(function(response) {
+         return $http.get('/Users/' + user + '/Hobbies');
+      })
+      .then(function(response) {
+         $scope.userHobbies = response.data;
+         $scope.newUserHobbies = [];
+      })
+      .then(refreshHobbies).then(clearErrorsOnSuccess).catch(reqErrorHandler);
+
+   }
 
     $scope.queryDorm = function(search) {
       var filteredDorms = dormList.filter(function(item) {
@@ -95,11 +184,13 @@ app.controller('preferencesController',
       return $q.when(filteredMajors)
    };
 
-   $scope.transformChip = function(chip) {
+   $scope.transformChip = function(chip, index) {
       var createChip;
 
-      if (angular.isObject(chip))
+      if (angular.isObject(chip)) {
+         $scope.newUserHobbies.push(chip);
         return chip;
+      }
       else {
         createChip = {id: -1, name: chip};
         //$scope.userHobbies.push(createChip);
@@ -124,6 +215,11 @@ app.controller('preferencesController',
       console.log(chip.id);
       console.log(index);
       console.log("exit chip");
+      var user = login.getUser().id;
+
+      if (chip.id != -1) {
+         $http.delete('/Users/' + user + /Hobbies/ + chip.id);
+      }
    };
 
 }]);
