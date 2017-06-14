@@ -4,7 +4,10 @@ app.controller('profileController',
    	$scope.user = user[0];
       $scope.prevUser = Object.assign({}, user[0]);
    	$scope.preferences = preferences[0];
-      $scope.isEditable = $scope.user.id === login.getUser().id;
+      $scope.isEditable = $scope.user.id === login.getUser().then(
+         function(user) {
+            return user.id
+         });
 
       $scope.imageUpload = function(event) {
          var files = event.target.files;

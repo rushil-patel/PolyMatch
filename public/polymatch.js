@@ -1,7 +1,8 @@
 
 var app = angular.module('mainApp', [
    'ui.router',
-   'ngMaterial'
+   'ngMaterial',
+   'ngCookies'
 ]);
 
 app.constant("errMaps", {

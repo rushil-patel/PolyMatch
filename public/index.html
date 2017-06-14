@@ -10,6 +10,8 @@
 <script src="bower_components/angular-material/angular-material.js"></script>
 
 <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+<script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="polymatch.js"></script>
 <link rel="stylesheet" href="polymatch.css">
@@ -27,33 +29,33 @@
 <script src="Register/registerController.js"></script>
 <script src="ui-routes.js"></script>
 
-<body ng-app="mainApp">
+<body ng-controller="navController" ng-app="mainApp">
   <md-nav-bar nav-bar-aria-label="navigation links">
-    <md-nav-item ng-if="!user" md-nav-sref="login" name="loginLink">
+    <md-nav-item ng-if="!isLoggedIn()" md-nav-sref="login" name="loginLink">
       Login
     </md-nav-item>
-    <md-nav-item ng-if="!user" md-nav-sref="register" name="registerLink">
+    <md-nav-item ng-if="!isLoggedIn()" md-nav-sref="register" name="registerLink">
       Register
     </md-nav-item>
-    <md-nav-item ng-if="user" md-nav-sref="home" name="home">
+    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="home" name="home">
       Home
     </md-nav-item>
-    <md-nav-item ng-if="user" md-nav-sref="user" name="username">
+    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="user" name="username">
       My Profile
     </md-nav-item>
-    <md-nav-item ng-if="user" md-nav-sref="preferences", name="preferences">
+    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="preferences", name="preferences">
       Preferences
     </md-nav-item>
-    <md-nav-item ng-if="user" md-nav-click="logout()" name="logout">
+    <md-nav-item ng-if="isLoggedIn()" md-nav-click="logout()" name="logout">
       Logout
     </md-nav-item>
-    <md-nav-item ng-if="user" md-nav-sref="matches" name="matches">
+    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="matches" name="matches">
       My Matches
     </md-nav-item>
-    <md-nav-item ng-if="user" md-nav-sref="savedMatches" name="savedMatches">
+    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="savedMatches" name="savedMatches">
       Saved Matches
     </md-nav-item>
-    <md-nav-item ng-if="user" md-nav-sref="archivedMatches" name="archivedMatches">
+    <md-nav-item ng-if="isLoggedIn()" md-nav-sref="archivedMatches" name="archivedMatches">
       Archived Matches
     </md-nav-item>
   </md-nav-bar>

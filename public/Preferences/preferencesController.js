@@ -58,7 +58,7 @@ app.controller('preferencesController',
       $scope.userHobbies = [];
     }
 
-  
+
     $scope.gradesRatioUpdate = function() {
       $scope.socialRatio = 100 - $scope.preferences.gradesRatio;
    };
@@ -69,10 +69,10 @@ app.controller('preferencesController',
 
    $scope.sleepMeridien = "pm";
    $scope.wakeMeridien = "am";
-   
+
    var normalizeInput = function() {
       var reqPrefs = Object.assign({}, $scope.preferences);
-      //var user = login.getUser().id;
+      //var user = login.getUser().then(function(user) { return user.id});;
       //var newHobbies, existingHobbies;
 
       delete reqPrefs.id;
@@ -109,10 +109,12 @@ app.controller('preferencesController',
 
    var updateHobbiesForUser = function(response) {
       var newUserHobbies = $scope.newUserHobbies;
-      var user = login.getUser().id;
+      login.getUser().then(function(user) {
+         var user = user.id;
 
-      newUserHobbies = newUserHobbies.concat(response.data);
-      return $http.post('/Users/' + user + '/Hobbies', newUserHobbies);
+         newUserHobbies = newUserHobbies.concat(response.data);
+         return $http.post('/Users/' + user + '/Hobbies', newUserHobbies);
+      });
    }
 
    var clearErrorsOnSuccess = function(response) {
@@ -127,21 +129,21 @@ app.controller('preferencesController',
    };
 
    $scope.savePreferences = function() {
-   
-      var user = login.getUser().id;
 
-      postNewHobbies().then(updateHobbiesForUser)
-      .then(function(response) {
-         $scope.newUserHobbies = [];
-      })
-      .then(function(response) {
-         return $http.post('/Users/' + user + '/Prefs', normalizeInput());
-      })
-      .then(function(response) {
-         $state.go('user');
-      })
-      .catch(reqErrorHandler);
-
+      login.getUser().then(function(user) {
+         var user = user.id
+         postNewHobbies().then(updateHobbiesForUser)
+         .then(function(response) {
+            $scope.newUserHobbies = [];
+         })
+         .then(function(response) {
+            return $http.post('/Users/' + user + '/Prefs', normalizeInput());
+         })
+         .then(function(response) {
+            $state.go('user');
+         })
+         .catch(reqErrorHandler);
+      });
    };
 
    var refreshHobbies = function() {
@@ -150,21 +152,22 @@ app.controller('preferencesController',
 
    $scope.updatePreferences = function() {
 
-      var user = login.getUser().id;
+      login.getUser().then(function(user) {
+         var user = user.id
 
-      postNewHobbies().then(updateHobbiesForUser)
-      .then(function(response) {
-         return $http.put('/Users/' + user + '/Prefs', normalizeInput());
-      })
-      .then(function(response) {
-         return $http.get('/Users/' + user + '/Hobbies');
-      })
-      .then(function(response) {
-         $scope.userHobbies = response.data;
-         $scope.newUserHobbies = [];
-      })
-      .then(refreshHobbies).then(clearErrorsOnSuccess).catch(reqErrorHandler);
-
+         postNewHobbies().then(updateHobbiesForUser)
+         .then(function(response) {
+            return $http.put('/Users/' + user + '/Prefs', normalizeInput());
+         })
+         .then(function(response) {
+            return $http.get('/Users/' + user + '/Hobbies');
+         })
+         .then(function(response) {
+            $scope.userHobbies = response.data;
+            $scope.newUserHobbies = [];
+         })
+         .then(refreshHobbies).then(clearErrorsOnSuccess).catch(reqErrorHandler);
+      });
    }
 
     $scope.queryDorm = function(search) {
@@ -215,11 +218,12 @@ app.controller('preferencesController',
       console.log(chip.id);
       console.log(index);
       console.log("exit chip");
-      var user = login.getUser().id;
-
-      if (chip.id != -1) {
-         $http.delete('/Users/' + user + /Hobbies/ + chip.id);
-      }
+      login.getUser().then(function(user) {
+         var user = user.id
+         if (chip.id != -1) {
+            $http.delete('/Users/' + user + /Hobbies/ + chip.id);
+         }
+      });
    };
 
 }]);

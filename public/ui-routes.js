@@ -17,15 +17,23 @@ app.config(['$stateProvider', '$urlRouterProvider',
          resolve: {
             user: ['$http', 'login',
              function($http, login) {
-               return $http.get('/Users/' + login.getUser().id).then(function(response) {
-                  return response.data;
-               });
+                return login.getUser()
+                 .then(function(user) {
+                    return $http.get('/Users/' + user.id)
+                     .then(function(response) {
+                       return response.data;
+                    });
+                 });
              }],
             preferences: ['$http', 'login',
              function($http, login) {
-               return $http.get('/Users/' + login.getUser().id + '/Prefs').then(function(response) {
-                  return response.data;
-               });
+                return login.getUser()
+                 .then(function(user) {
+                    return $http.get('/Users/' + user.id + '/Prefs')
+                     .then(function(response) {
+                       return response.data;
+                    });
+                 });
              }]
          }
       })
@@ -73,15 +81,25 @@ app.config(['$stateProvider', '$urlRouterProvider',
             hobbyList: ['$q', '$http', 'api', function($q, $http, api) {
                return api.getHobbies();
             }],
-            preferences: ['$q', '$http', 'login', function($q, $http, login) {
-               return $http.get('/Users/' + login.getUser().id + '/Prefs').then(function(response) {
-                  return response.data;
-               });
+            preferences: ['$http', 'login',
+               function($http, login) {
+                  return login.getUser()
+                   .then(function(user) {
+                      return $http.get('/Users/' + user.id + '/Prefs')
+                       .then(function(response) {
+                         return response.data;
+                      });
+                   });
             }],
-            userHobbies: ['$q', '$http', 'login', function($q, $http, login) {
-               return $http.get('/Users/' + login.getUser().id + '/Hobbies').then(function(response) {
-                  return response.data;
-               });
+            userHobbies: ['$http', 'login',
+               function($http, login) {
+                  return login.getUser()
+                   .then(function(user) {
+                      return $http.get('/Users/' + user.id + '/Hobbies')
+                       .then(function(response) {
+                         return response.data;
+                      });
+                   });
             }]
          }
       })
@@ -94,13 +112,21 @@ app.config(['$stateProvider', '$urlRouterProvider',
             extraQuery: 'saved=0&&archived=0'
          },
          resolve: {
-            matches: ['$q', '$http', 'login',
-             function($q, $http, login) {
-               return $http.get('/Users/' + login.getUser().id + 
-                  '/Matches?saved=0&&archived=0')
-               .then(function(response) {
-                  return response.data;
-               });
+            matches: ['$http', 'login',
+            function($http, login) {
+               return login.getUser()
+                .then(function(user) {
+                   return $http.get('/Users/' + user.id + '/Matches?saved=0&&archived=0')
+                    .then(function(response) {
+                      return response.data;
+                   });
+                });
+            }],
+            dormList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getDorms();
+            }],
+            majorList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getMajors();
             }]
          }
       })
@@ -113,13 +139,21 @@ app.config(['$stateProvider', '$urlRouterProvider',
             extraQuery: 'saved=1'
          },
          resolve: {
-            matches: ['$q', '$http', 'login',
-             function($q, $http, login) {
-               return $http.get('/Users/' + login.getUser().id + 
-                  '/Matches?saved=1')
-               .then(function(response) {
-                  return response.data;
+            matches: ['$http', 'login',
+            function($http, login) {
+              return login.getUser()
+               .then(function(user) {
+                  return $http.get('/Users/' + user.id + '/Matches?saved=1')
+                   .then(function(response) {
+                     return response.data;
+                  });
                });
+            }],
+            dormList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getDorms();
+            }],
+            majorList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getMajors();
             }]
          }
       })
@@ -132,13 +166,21 @@ app.config(['$stateProvider', '$urlRouterProvider',
             extraQuery: 'archived=1'
          },
          resolve: {
-            matches: ['$q', '$http', 'login',
-             function($q, $http, login) {
-               return $http.get('/Users/' + login.getUser().id +
-                  '/Matches?archived=1')
-               .then(function(response) {
-                  return response.data;
-               });
+            matches: ['$http', 'login',
+            function($http, login) {
+             return login.getUser()
+              .then(function(user) {
+                 return $http.get('/Users/' + user.id + '/Matches?archived=1')
+                  .then(function(response) {
+                    return response.data;
+                 });
+              });
+            }],
+            dormList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getDorms();
+            }],
+            majorList: ['$q', '$http', 'api', function($q, $http, api) {
+               return api.getMajors();
             }]
          }
       });
