@@ -35,6 +35,7 @@ router.post('/', function(req, res) {
 		 	 [body], cb);
 		else {
 			emptyBody = true;
+			res.json([]);
 			return cb(emptyBody);
 		}
 	},
@@ -59,9 +60,6 @@ router.post('/', function(req, res) {
    	cb();
    }],
 	function(err) {
-		if (err) {
-			res.json([]);
-		}
 		cnn.release();
 	});
 })
