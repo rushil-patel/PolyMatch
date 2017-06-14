@@ -90,7 +90,8 @@ app.config(['$stateProvider', '$urlRouterProvider',
          templateUrl: 'Matches/matches.template.html',
          controller: 'matchesController',
          data: {
-            title: 'New Matches!'
+            title: 'New Matches!',
+            extraQuery: 'saved=0&&archived=0'
          },
          resolve: {
             matches: ['$q', '$http', 'login',
@@ -108,7 +109,8 @@ app.config(['$stateProvider', '$urlRouterProvider',
          templateUrl: 'Matches/matches.template.html',
          controller: 'matchesController',
          data: {
-            title: 'Saved Matches!'
+            title: 'Saved Matches!',
+            extraQuery: 'saved=1'
          },
          resolve: {
             matches: ['$q', '$http', 'login',
@@ -126,7 +128,8 @@ app.config(['$stateProvider', '$urlRouterProvider',
          templateUrl: 'Matches/matches.template.html',
          controller: 'matchesController',
          data: {
-            title: 'Archived Matches!'
+            title: 'Archived Matches!',
+            extraQuery: 'archived=1'
          },
          resolve: {
             matches: ['$q', '$http', 'login',
