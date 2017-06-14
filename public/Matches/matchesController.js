@@ -8,7 +8,6 @@ app.controller('matchesController',
    		'cleanliness').split(' ').map(function(f) {
         return {filter: f};
       });
-   		console.log($scope.filters);
    	
    	for (var match in matches) {
    		if (matches[match].pictureUrl === null) {
