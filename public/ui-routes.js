@@ -8,7 +8,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
       $stateProvider
       .state('home',  {
          url: '/',
-         template: "<div><img src='Images/campus.jpeg' style='width:100%; height:100%;'></div>"
+         // template: "<div><img src='Images/campus.jpeg' style='width:100%; height:100%;'></div>"
       })
       .state('user', {
          url: '/profile',
