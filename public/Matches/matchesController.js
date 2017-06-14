@@ -9,7 +9,6 @@ app.controller('matchesController',
          'cleanliness').split(' ').map(function(f) {
         return {filter: f};
       });
-      
 
       $scope.matches = matches;
 
@@ -65,27 +64,35 @@ app.controller('matchesController',
 
             for (var filter in $scope.currentFilters) {
                query += " && " + $scope.currentFilters[filter].name + "=";
+               if ($scope.currentFilters[filter].name === "firstName" ||
+                $scope.currentFilters[filter].name === "lastName") {
+                  query += "'";
+               }
+               var value = $scope.currentFilters[filter].value;
                if ($scope.currentFilters[filter].name === "dormName") {
                   for (var dorm in dormList) {
                      if (dormList[dorm].name === $scope.currentFilters[filter].value) {
-                        $scope.currentFilters[filter].value = dormList[dorm].id;
+                        value = dormList[dorm].id;
                         break;
                      }
+                  }
+                  if (value === $scope.currentFilters[filter].value) {
+                     value = 0;
                   }
                }
                else if ($scope.currentFilters[filter].name === "major") {
                   for (var major in majorList) {
                      if (majorList[major].name === $scope.currentFilters[filter].value) {
-                        $scope.currentFilters[filter].value = majorList[major].id;
+                        value = majorList[major].id;
                         break;
                      }
                   }
+                  if (value === $scope.currentFilters[filter].value) {
+                     value = 0;
+                  }
                }
-               if ($scope.currentFilters[filter].name === "firstName" ||
-                $scope.currentFilters[filter].name === "lastName") {
-                  query += "'";
-               }
-               query += $scope.currentFilters[filter].value;
+               
+               query += value;
                if ($scope.currentFilters[filter].name === "firstName" ||
                 $scope.currentFilters[filter].name === "lastName") {
                   query += "'";
@@ -117,27 +124,34 @@ app.controller('matchesController',
 
             for (var filter in $scope.currentFilters) {
                query += " && " + $scope.currentFilters[filter].name + "=";
+               if ($scope.currentFilters[filter].name === "firstName" ||
+                $scope.currentFilters[filter].name === "lastName") {
+                  query += "'";
+               }
+               var value = $scope.currentFilters[filter].value;
                if ($scope.currentFilters[filter].name === "dormName") {
                   for (var dorm in dormList) {
                      if (dormList[dorm].name === $scope.currentFilters[filter].value) {
-                        $scope.currentFilters[filter].value = dormList[dorm].id;
+                        value = dormList[dorm].id;
                         break;
                      }
+                  }
+                  if (value === $scope.currentFilters[filter].value) {
+                     value = 0;
                   }
                }
                else if ($scope.currentFilters[filter].name === "major") {
                   for (var major in majorList) {
                      if (majorList[major].name === $scope.currentFilters[filter].value) {
-                        $scope.currentFilters[filter].value = majorList[major].id;
+                        value = majorList[major].id;
                         break;
                      }
                   }
+                  if (value === $scope.currentFilters[filter].value) {
+                     value = 0;
+                  }
                }
-               if ($scope.currentFilters[filter].name === "firstName" ||
-                $scope.currentFilters[filter].name === "lastName") {
-                  query += "'";
-               }
-               query += $scope.currentFilters[filter].value;
+               query += value;
                if ($scope.currentFilters[filter].name === "firstName" ||
                 $scope.currentFilters[filter].name === "lastName") {
                   query += "'";
