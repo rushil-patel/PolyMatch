@@ -39,6 +39,7 @@ router.post('/:usrId/Hobbies', function(req, res) {
    var vld = req.validator;
    var update = 'insert into Hobbies (userId, hobbyId) values ?';
    var hobbyFoundList, errorRes, batch;
+   var emptyBody;
 
    async.waterfall([
    function(cb) {
@@ -50,11 +51,21 @@ router.post('/:usrId/Hobbies', function(req, res) {
          hobbyFoundList = body.map(function(hobbyObj) {
             return hobbyObj.id;
          });
-         cnn.chkQry("select * from HobbyEnum where id in (?)", [hobbyFoundList], cb);
+         if (hobbyFoundList.length)
+            cnn.chkQry("select * from HobbyEnum where id in (?)", [hobbyFoundList], cb);
+         else {
+            emptyBody = true;
+            cb(emptyBody);
+         }
       }
    },
    function(hobby, fields, cb) {
       if (vld.check(hobby.length == body.length, Tags.notFound, ["hobby"], cb)) {
+         cnn.chkQry("select * from Hobbies where hobbyId in (?)", [hobbyFoundList], cb);
+      }
+   },
+   function(results, fields, cb) {
+      if (vld.check(!results.length, Tags.dupHobby, ["Hobby already associated with User"], cb)) {
          batch = body.map(function(hobbyObj) {
             return [user, hobbyObj.id];
          });

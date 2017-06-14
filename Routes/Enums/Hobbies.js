@@ -25,11 +25,18 @@ router.post('/', function(req, res) {
 	var body = req.body;
 	var errorRes;
 	var batch;
+	var emptyBody;
 
 	async.waterfall([
 	function(cb) {
-		cnn.chkQry('select * from HobbyEnum where name in (?)',
-		 [body], cb);
+
+		if (body.length)
+			cnn.chkQry('select * from HobbyEnum where name in (?)',
+		 	 [body], cb);
+		else {
+			emptyBody = true;
+			return cb(emptyBody);
+		}
 	},
 	function(result, fields, cb) {
 		if (result.length) {
@@ -52,6 +59,9 @@ router.post('/', function(req, res) {
    	cb();
    }],
 	function(err) {
+		if (err) {
+			res.json([]);
+		}
 		cnn.release();
 	});
 })

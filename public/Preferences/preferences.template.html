@@ -1,4 +1,5 @@
 <div class="md-padding" ng-cloak layout="column">
+
   <md-card>
     <md-card-title>
       <md-card-title-text>
@@ -10,7 +11,7 @@
 
       <span>Which dormitory do you prefer?</span>
       <md-card-content>
-         <md-autocomplete placeholder="type in a dormitrory" md-selected-item="preferences.dorm" md-search-text="dormSearch" md-items="item in queryDorm(dormSearch)" md-item-text="item.name">
+         <md-autocomplete placeholder="type in a dormitrory" md-selected-item="selectedDorm" md-search-text="dormSearch" md-items="item in queryDorm(dormSearch)" md-item-text="item.name">
             <span md-highlight-text="searchText">{{item.name}}</span>
          </md-autocomplete>
       </md-card-content>
@@ -18,7 +19,7 @@
 
      <span>What's your major?</span>
      <md-card-content>
-        <md-autocomplete placeholder="type in a major" md-selected-item="preferences.major" md-search-text="majorSearch" md-items="item in queryMajor(majorSearch)" md-item-text="item.name">
+        <md-autocomplete placeholder="type in a major" md-selected-item="selectedMajor" md-search-text="majorSearch" md-items="item in queryMajor(majorSearch)" md-item-text="item.name">
            <span md-highlight-text="searchText">{{item.name}}</span>
         </md-autocomplete>
      </md-card-content>
@@ -75,7 +76,7 @@
       <div layout-gt-sm="row">
          <md-input-container>
            <label>sleep time</label>
-           <input ng-model="preferences.sleepHour" type="number">
+           <input ng-model="preferences.sleepTime" type="number">
         </md-input-container>
         <md-input-container>
            <md-select ng-model="sleepMeridien" placeholder="{{sleepMeridien}}"
@@ -93,7 +94,7 @@
      <div layout-gt-sm="row">
         <md-input-container>
          <label>sleep time</label>
-         <input ng-model="preferences.wakeHour" type="number">
+         <input ng-model="preferences.wakeTime" type="number">
         </md-input-container>
         <md-input-container>
            <md-select ng-model="wakeMeridien" placeholder="{{wakeMeridien}}"
@@ -108,18 +109,18 @@
 
   <span>How often do you like to clean? It's okay to be honest</span>
   <md-card-content>
-     <md-radio-group ng-model="cleanliness" layout="row">
-        <md-radio-button value="1" class="md-primary">slob</md-radio-button>
-        <md-radio-button value="2">rarely</md-radio-button>
-        <md-radio-button value="3">sometimes</md-radio-button>
-        <md-radio-button value="4">often</md-radio-button>
-        <md-radio-button value="5">every day</md-radio-button>
+     <md-radio-group ng-model="preferences.cleanliness" layout="row">
+        <md-radio-button ng-value="1" class="md-primary">slob</md-radio-button>
+        <md-radio-button ng-value="2">rarely</md-radio-button>
+        <md-radio-button ng-value="3">sometimes</md-radio-button>
+        <md-radio-button ng-value="4">often</md-radio-button>
+        <md-radio-button ng-value="5">every day</md-radio-button>
      </md-radio-group>
   </md-card-content>
 
   <span>Hobbies</span>
   <md-card-content>
-    <md-chips ng-model="userHobbies" md-automcomplete-snap md-transform-chip="transformChip($chip)" md-on-remove="exitChip($chip, $index)">
+    <md-chips ng-model="userHobbies" md-automcomplete-snap md-transform-chip="transformChip($chip, $index)" md-on-remove="exitChip($chip, $index)">
       <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in queryHobby(searchText)" md-item-text="item.name" placeholder="Add some hobbies">
         <span md-highlight-text="searchText">{{item.name}}</span>
       </md-autocomplete>
@@ -132,10 +133,28 @@
   </md-card-content>
 
   <md-card-actions>
-    <md-button class="md-primary md-raised">Save</md-button>
+    <md-button class="md-primary md-raised" ng-show="!canUpdate" ng-click="savePreferences()">Save</md-button>
+    <md-button class="md-primary md-raised" ng-show="canUpdate" ng-click="updatePreferences()">Update</md-button>
   </md-card-actions>
 
    </md-card-content>
    </md-card>
 
 </div>
+
+<div ng-show="errors.length">
+    <md-toolbar layout="row" style="background-color: indianred;">
+        <div class="md-toolbar-tools">
+          <span>Errors</span>
+        </div>
+    </md-toolbar>
+    <md-content>
+      <md-list flex>
+        <md-list-item class="md-1-line" ng-repeat="err in errors">
+          <div class="md-list-item-text" layout="column">
+            -{{err | tagError}}
+          </div>
+        </md-list-item>
+      </md-list>
+    </md-content>
+  </div>
