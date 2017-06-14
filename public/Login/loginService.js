@@ -1,16 +1,30 @@
-app.factory("login", ["$http", "$cookies"
-function($http, $cookies) {
-   var cookie;
+app.factory("login", ["$q", "$http", '$rootScope', "$cookies",
+function($q, $http, $rootScope, $cookies) {
    var user;
 
    return {
+      loginRefresh: function() {
+         var currentCookie = $cookies.get("pmAuth");
+         console.log(currentCookie);
+         return $http.get("Ssns/" + currentCookie)
+          .then(function(response) {
+              var sessionData = response.data;
+              return $http.get("Users/" + sessionData.prsId)
+          })
+          .then(function(response) {
+             console.log("response");
+             console.log(response);
+             return user = response.data[0];
+          });
+      },
+
       login: function(loginData) {
          return $http.post("Ssns", loginData)
          .then(function(response) {
             var location = response.headers().location.split('/');
 
             cookie = location[location.length - 1];
-            $cookies.pmAuth = cookie;
+            $cookies.put("pmAuth", cookie);
             return $http.get("Ssns/" + cookie);
          })
          .then(function(response) {
@@ -18,18 +32,25 @@ function($http, $cookies) {
          })
          .then(function(response) {
             user = response.data[0];
+            $rootScope.user = user;
+            console.log("set rootscope user")
             return response.data[0];
          });
       },
       logout: function() {
-         return $http.delete("Ssns/" + cookie)
+         return $http.delete("Ssns/" + $cookies.get("pmAuth"))
          .then(function() {
             user = null;
-            cookie = null;
+            $rootScope.user = null;
+            $cookies.remove("pmAuth");
          });
       },
       getUser: function() {
-         return user;
+         if (!user && $cookies.get("pmAuth")) {
+            return this.loginRefresh()
+         } else {
+            return $q.when(user);
+         }
       }
    };
 }]);

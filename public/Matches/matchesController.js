@@ -9,7 +9,7 @@ app.controller('matchesController',
         return {filter: f};
       });
    		console.log($scope.filters);
-   	
+
    	for (var match in matches) {
    		if (matches[match].pictureUrl === null) {
    			matches[match].pictureUrl = 'Images/default.png';
@@ -19,23 +19,25 @@ app.controller('matchesController',
    	$scope.matches = matches;
 
    	$scope.saveMatch = function(matchId, boolean) {
-
-   		$http.put('Users/' + login.getUser().id + '/Matches/' + matchId, 
-   		 {'saved': boolean}).then(function(response) {
-   		 	$state.reload();
-   		 }).catch(function(err) {
-   		 	console.log('not saved');
-   		 });
+         login.getUser().then(function(user) {
+            $http.put('Users/' + user.id + '/Matches/' + matchId,
+      		 {'saved': boolean}).then(function(response) {
+      		 	$state.reload();
+      		 }).catch(function(err) {
+      		 	console.log('not saved');
+      		 });
+         })
    	};
 
    	$scope.hideMatch = function(matchId, boolean) {
-
-   		$http.put('Users/' + login.getUser().id + '/Matches/' + matchId, 
-   		 {'archived': boolean}).then(function(response) {
-   		 	$state.reload();
-   		 }).catch(function(err) {
-   		 	console.log('not hidden');
-   		 });
+         login.getUser().then(function(user) {
+            $http.put('Users/' + user.id + '/Matches/' + matchId,
+      		 {'archived': boolean}).then(function(response) {
+      		 	$state.reload();
+      		 }).catch(function(err) {
+      		 	console.log('not hidden');
+      		 });
+         })
    	};
 
    	$scope.addNote = function(index) {
@@ -44,10 +46,12 @@ app.controller('matchesController',
 
    	$scope.submitNote = function(index, note) {
    		matches[index].newNote = false;
-   		$http.put('Users/' + login.getUser().id + '/Matches/' + matches[index].matchId,
-   		 {'notes': note}).then(function(response) {
-   		 	$state.reload();
-   		 });
+         login.getUser().then(function(user) {
+            $http.put('Users/' + user.id + '/Matches/' + matches[index].matchId,
+      		 {'notes': note}).then(function(response) {
+      		 	$state.reload();
+      		 });
+         });
    	};
 
 }]);
