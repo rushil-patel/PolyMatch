@@ -10,11 +10,6 @@ app.controller('matchesController',
         return {filter: f};
       });
       
-      for (var match in matches) {
-         if (matches[match].pictureUrl === null) {
-            matches[match].pictureUrl = 'Images/default.png';
-         }
-      }
 
       $scope.matches = matches;
 
