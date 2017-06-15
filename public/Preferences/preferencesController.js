@@ -109,7 +109,7 @@ app.controller('preferencesController',
 
    var updateHobbiesForUser = function(response) {
       var newUserHobbies = $scope.newUserHobbies;
-      login.getUser().then(function(user) {
+      return login.getUser().then(function(user) {
          var user = user.id;
 
          newUserHobbies = newUserHobbies.concat(response.data);
@@ -146,7 +146,7 @@ app.controller('preferencesController',
    };
 
    var refreshHobbies = function() {
-      $http.get('/Hobbies');
+      return $http.get('/Hobbies');
    };
 
    $scope.updatePreferences = function() {
