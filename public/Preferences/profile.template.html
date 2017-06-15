@@ -17,7 +17,7 @@
                     <label ng-class="{'profile-label': isEditable}" for="attach-project-file">
                        <img  class="profile-img"
                         ng-src="{{user.picture || user.pictureUrl}}">
-                       <div ng-show="!user.picture && !user.pictureUrl"
+                       <div ng-if="isEditable && !user.picture && !user.pictureUrl"
                         class="filename" id="attached-project-file">
                            Click to add your profile picture
                         </div>
