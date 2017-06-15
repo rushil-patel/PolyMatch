@@ -7,7 +7,7 @@ app.controller('profileController',
 
       login.getUser().then(
          function(user) {
-            $scope.isEditable = $scope.user.id = user.id;
+            $scope.isEditable = $scope.user.id == user.id;
          });
 
       $scope.imageUpload = function(event) {
