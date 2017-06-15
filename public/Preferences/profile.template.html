@@ -38,15 +38,15 @@
            <label>Gender</label>
            <md-input-container>
              <button ng-show='user.gender === "m" || isEditable'
-              ng-disabled='!isEditable || user.gender !== "M"'
+              ng-disabled='!isEditable || user.gender !== "m"'
               class="md-fab md-mini md-button md-ink-ripple" type="button"
-              ng-click="setGender('F')">
+              ng-click="setGender('f')">
                M
             </button>
             <button ng-show='user.gender === "f" || isEditable'
-             ng-disabled='!isEditable || user.gender !== "F"'
+             ng-disabled='!isEditable || user.gender !== "f"'
              class="md-fab md-mini md-button md-ink-ripple" type="button"
-             ng-click="setGender('M')">
+             ng-click="setGender('m')">
                F
             </button>
            </md-input-container>
@@ -121,4 +121,12 @@
       </div>
     </div>
   </md-card>
+
+  <md-card ng-show="hasHobbies()" class="profile-card">
+    <md-card-content>
+      <span>Hobbies</span>
+      <hobby-list user-hobbies="hobbies"></hobby-list>
+    </md-card-content>
+  </md-card>
+
 </div>

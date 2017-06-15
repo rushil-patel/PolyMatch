@@ -1,9 +1,10 @@
 app.controller('profileController',
- ['$scope', '$state', '$http', 'login', 'notifyDlg', 'user', 'preferences',
-   function($scope, $state, $http, login, nDlg, user, preferences) {
+ ['$scope', '$state', '$http', 'login', 'notifyDlg', 'user', 'preferences', 'hobbies',
+   function($scope, $state, $http, login, nDlg, user, preferences, hobbies) {
    	$scope.user = user[0];
       $scope.prevUser = Object.assign({}, user[0]);
    	$scope.preferences = preferences[0];
+    $scope.hobbies = hobbies;
 
       login.getUser().then(
          function(user) {
@@ -31,6 +32,10 @@ app.controller('profileController',
 
       $scope.hasSetPreferences = function() {
         return Object.keys($scope.preferences || {}).length !== 0;
+     }
+
+     $scope.hasHobbies = function() {
+        return $scope.hobbies.length !== 0;
      }
 
       $scope.hasEditedUser = function() {

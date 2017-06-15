@@ -2,21 +2,23 @@
 app.factory("notifyDlg", ["$mdDialog", function(mdD) {
    return {
       show: function(scp, msg, hdr, btns, sz) {
-         scp.controller = 'dialogController';
+         //scp.controller = 'dialogController';
          scp.msg = msg;
          scp.hdr = hdr;
          btns = btns || [true, true];
          scp.buttonOk = btns[0] && ['OK'];
          scp.buttonCancel = btns[1] && ['Cancel'];
-         var confirm = mdD.confirm().title(hdr).textContent(msg);
+         var dialogBox; 
           
-         if (scp.buttonOk) {
-            confirm.ok('OK');
+         if (!scp.buttonCancel) {
+            dialogBox = mdD.alert().title(hdr).textContent(msg)
+             .ok('OK');
          }
-         if (scp.buttonCancel) {
-            confirm.cancel('Cancel');
+         else if (scp.buttonOk && scp.buttonCancel) {
+            dialogBox = mdD.confirm().title(hdr).textContent(msg)
+             .ok('OK').cancel('Cancel');
          }
-         return mdD.show(confirm);
+         return mdD.show(dialogBox);
       },
    };
 }]);

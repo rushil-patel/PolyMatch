@@ -62,16 +62,26 @@ app.filter('timeOutputFilter', [function() {
    }
 }]);
 
-app.directive('cnvSummary', [function() {
+app.directive('hobbyList', [function() {
    return {
       restrict: 'E',
       scope: {
-         user: "=user",
-         cnvNum: "=index",
-         cnv: "=toSummarize",
-         editCnv: "&editCnv",
-         delCnv: "&delCnv"
+         hobbies: "=userHobbies"
       },
-      templateUrl: 'Conversation/cnvSummary.template.html'
+      templateUrl: 'Util/hobbyChips.template.html'
    };
 }]);
+
+// app.directive('cnvSummary', [function() {
+//    return {
+//       restrict: 'E',
+//       scope: {
+//          user: "=user",
+//          cnvNum: "=index",
+//          cnv: "=toSummarize",
+//          editCnv: "&editCnv",
+//          delCnv: "&delCnv"
+//       },
+//       templateUrl: 'Conversation/cnvSummary.template.html'
+//    };
+// }]);

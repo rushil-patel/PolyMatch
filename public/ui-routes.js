@@ -34,7 +34,17 @@ app.config(['$stateProvider', '$urlRouterProvider',
                        return response.data;
                     });
                  });
-             }]
+             }],
+             hobbies: ['$http', 'login',
+              function($http, login) {
+                return login.getUser()
+                 .then(function(user) {
+                    return $http.get('/Users/' + user.id + '/Hobbies')
+                     .then(function(response) {
+                      return response.data;
+                     });
+                 });
+              }]
          }
       })
       .state('profile', {
@@ -54,7 +64,13 @@ app.config(['$stateProvider', '$urlRouterProvider',
                return $http.get('/Users/' + $stateParams.usrId + '/Prefs').then(function(response) {
                   return response.data;
                });
-             }]
+             }],
+            hobbies: ['$http', '$stateParams', 'login',
+              function($http, $stateParams, login) {
+                return $http.get('/Users/' + $stateParams.usrId + '/Hobbies').then(function(response) {
+                  return response.data;
+                });
+            }]
          }
       })
       .state('register', {
