@@ -5,15 +5,12 @@ function($q, $http, $rootScope, $cookies) {
    return {
       loginRefresh: function() {
          var currentCookie = $cookies.get("pmAuth");
-         console.log(currentCookie);
          return $http.get("Ssns/" + currentCookie)
           .then(function(response) {
               var sessionData = response.data;
               return $http.get("Users/" + sessionData.prsId)
           })
           .then(function(response) {
-             console.log("response");
-             console.log(response);
              return user = response.data[0];
           });
       },
@@ -33,7 +30,6 @@ function($q, $http, $rootScope, $cookies) {
          .then(function(response) {
             user = response.data[0];
             $rootScope.user = user;
-            console.log("set rootscope user")
             return response.data[0];
          });
       },

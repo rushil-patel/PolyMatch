@@ -1,6 +1,6 @@
 app.controller('navController',
    ['$scope', '$rootScope', '$state', '$cookies', '$location', 'login', 'notifyDlg',
-   function($scope, $rootScope, $state, $cookies, location, login, nDlg) {
+   function($scope, $rootScope, $state, $cookies, $location, login, nDlg) {
 
       login.getUser()
       .then(function(user) {
@@ -13,6 +13,17 @@ app.controller('navController',
 
       $scope.isLoggedIn = function() {
          return $rootScope.user;
+      }
+
+
+      $rootScope.$on('$stateChangeSuccess', function() {
+         $scope.selectedNavItem = $state.current.name;
+         console.log($scope.selectedNavItem);
+      });
+
+      $rootScope.getSelectedNavItem = function() {
+         console.log("getting nav item")
+         return $scope.selectedNavItem || "home";
       }
 
       $scope.logout = function() {
@@ -31,8 +42,4 @@ app.controller('navController',
       $scope.changeLang = function(lang) {
          $rootScope.lang = lang;
       };
-
-      $scope.getTabName = function() {
-         return $location.hash().replace(/(^#\/|\/$)/g, '');
-      }
 }]);

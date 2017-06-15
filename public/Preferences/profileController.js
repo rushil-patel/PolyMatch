@@ -4,9 +4,10 @@ app.controller('profileController',
    	$scope.user = user[0];
       $scope.prevUser = Object.assign({}, user[0]);
    	$scope.preferences = preferences[0];
-      $scope.isEditable = $scope.user.id === login.getUser().then(
+
+      login.getUser().then(
          function(user) {
-            return user.id
+            $scope.isEditable = $scope.user.id = user.id;
          });
 
       $scope.imageUpload = function(event) {
@@ -21,12 +22,16 @@ app.controller('profileController',
       $scope.imageIsLoaded = function(e) {
          $scope.$apply(function() {
             $scope.user.picture = e.target.result;
-         })
+         });
       }
 
       $scope.setGender = function(gender) {
          $scope.user.gender = gender;
       }
+
+      $scope.hasSetPreferences = function() {
+        return Object.keys($scope.preferences || {}).length !== 0;
+     }
 
       $scope.hasEditedUser = function() {
          var a = $scope.user;
@@ -38,8 +43,6 @@ app.controller('profileController',
           a.lastName === b.lastName &&
           a.introduction === b.introduction &&
           a.picture === b.picture)
-          console.log(a);
-          console.log(b);
       }
 
       $scope.restoreUser = function() {
@@ -64,6 +67,5 @@ app.controller('profileController',
             console.log("failed to modify user");
             console.log(error);
          })
-         console.log(newUser);
       }
  }]);

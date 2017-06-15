@@ -4,7 +4,7 @@ app.controller('loginController',
    $scope.login = function() {
       login.login($scope.user)
       .then(function(user) {
-         $state.go('preferences');
+         $state.go('user');
       })
       .catch(function(error) {
          console.log(error);

@@ -76,7 +76,7 @@
 
 </md-card>
   <md-card class="profile-card">
-    <div layout="row" layout-align="center center">
+    <div ng-show="hasSetPreferences()" layout="row" layout-align="center center">
       <div flex="50">
         <md-card-content>
           <span> Dorm: {{preferences.dormName}} </span>
@@ -110,6 +110,14 @@
         <md-card-content>
           <span> Cleanliness: {{preferences.cleanliness}}/5</span>
         </md-card-content>
+      </div>
+    </div>
+    <div ng-show="!hasSetPreferences()" layout="row" layout-align="center center">
+      <div>
+      <md-card-content>
+         <a href="#" class="md-primary" ui-sref="preferences">Set your preferences</a>
+      </md-card-content>
+
       </div>
     </div>
   </md-card>
