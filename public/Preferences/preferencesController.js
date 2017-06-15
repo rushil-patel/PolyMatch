@@ -80,17 +80,17 @@ app.controller('preferencesController',
 
       if ($scope.selectedDorm)
         reqPrefs.dormName = $scope.selectedDorm.id;
+      else
+        delete reqPrefs.dormName;
       if ($scope.selectedMajor)
         reqPrefs.major = $scope.selectedMajor.id;
+      else
+        delete reqPrefs.major;
 
       reqPrefs.wakeTime = $filter('timeOutputFilter')($scope.preferences.wakeTime, $scope.wakeMeridien);
 
       reqPrefs.sleepTime = $filter('timeOutputFilter')($scope.preferences.sleepTime, $scope.sleepMeridien);
 
-      console.log(reqPrefs);
-      console.log("MODEL VVV");
-      console.log($scope.preferences);
-      console.log($scope.userHobbies);
       return reqPrefs;
    };
 
@@ -122,7 +122,6 @@ app.controller('preferencesController',
    };
 
    var reqErrorHandler = function(err) {
-      console.log('CATCH')
       console.log(err.data);
       if (err.data)
         $scope.errors = err.data;
@@ -214,10 +213,6 @@ app.controller('preferencesController',
    };
 
    $scope.exitChip = function(chip, index) {
-      console.log(chip.name);
-      console.log(chip.id);
-      console.log(index);
-      console.log("exit chip");
       login.getUser().then(function(user) {
          var user = user.id
          if (chip.id != -1) {
