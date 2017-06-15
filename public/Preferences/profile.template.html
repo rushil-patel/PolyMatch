@@ -38,15 +38,15 @@
            <label>Gender</label>
            <md-input-container>
              <button ng-show='user.gender === "m" || isEditable'
-              ng-disabled='!isEditable || user.gender !== "m"'
+              ng-disabled='!isEditable || user.gender !== "M"'
               class="md-fab md-mini md-button md-ink-ripple" type="button"
-              ng-click="setGender('f')">
+              ng-click="setGender('F')">
                M
             </button>
             <button ng-show='user.gender === "f" || isEditable'
-             ng-disabled='!isEditable || user.gender !== "f"'
+             ng-disabled='!isEditable || user.gender !== "F"'
              class="md-fab md-mini md-button md-ink-ripple" type="button"
-             ng-click="setGender('m')">
+             ng-click="setGender('M')">
                F
             </button>
            </md-input-container>
