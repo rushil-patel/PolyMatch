@@ -90,7 +90,7 @@ router.get('/:usrId/Matches/:mId', function(req, res) {
 		if (vld.check(match.length, Tags.notFound, null, cb)) {
 			cnn.chkQry('select M.id, score, firstName, lastName, email, ' +
 			 ' gender, age, introduction, pictureUrl, saved, archived, notes from Matches M JOIN User' +
-			 ' U ON M.newPerson = U.id where M.id = ?', [mId], cb);
+			 ' U ON M.oldPerson = U.id where M.id = ?', [mId], cb);
 		}
 	},
 	function(matchInfo, fields, cb) {
