@@ -26,7 +26,7 @@ app.controller('preferencesController',
     if (preferences.length) {
       $scope.canUpdate = true;
       $scope.preferences = preferences[0];
-      var index = 0, timeObject;
+      var index = 0, timeDisplay;
 
       while (index < $scope.dormList.length && 
        $scope.dormList[index].name !== preferences[0].dormName) {
@@ -40,13 +40,15 @@ app.controller('preferencesController',
       }
       $scope.selectedMajor = majorList[index];
 
-      timeObject = $filter('timeInputFilter')(preferences[0].wakeTime);
-      $scope.preferences.wakeTime = timeObject.time;
-      $scope.wakeMeridien = timeObject.meridien;
+      timeDisplay = $filter('timeInputFilter')(preferences[0].wakeTime)
+      .split(' ');
+      $scope.preferences.wakeTime = parseInt(timeDisplay[0], 10);
+      $scope.wakeMeridien = timeDisplay[1];
 
-      timeObject = $filter('timeInputFilter')(preferences[0].sleepTime);
-      $scope.preferences.sleepTime = timeObject.time;
-      $scope.sleepMeridien = timeObject.meridien;
+      timeDisplay = $filter('timeInputFilter')(preferences[0].sleepTime)
+      .split(' ');
+      $scope.preferences.sleepTime = parseInt(timeDisplay[0], 10);
+      $scope.sleepMeridien = timeDisplay[1];
 
       $scope.userHobbies = userHobbies;
 

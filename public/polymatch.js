@@ -29,18 +29,18 @@ app.filter('tagError', ['errMap',
 
 app.filter('timeInputFilter', [function() {
    return function(time) {
-      var timeDisplay = {};
-      if (time >= 12) {
-         timeDisplay.time = time - 12;
-         timeDisplay.meridien = "pm";
+      var timeDisplay = "";
+      if (time > 12) {
+         timeDisplay += (time - 12) + " pm";
       }
       else if (time == 0) {
-         timeDisplay.time = 12;
-         timeDisplay.meridien = "am";
+         timeDisplay += 12 + " am";
+      }
+      else if (time == 12) {
+         timeDisplay += 12 + " pm";
       }
       else {
-         timeDisplay.time = time;
-         timeDisplay.meridien = "am";
+         timeDisplay += time + " am";
       }
       return timeDisplay;
    }

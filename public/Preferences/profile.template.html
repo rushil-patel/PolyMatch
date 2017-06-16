@@ -102,10 +102,10 @@
           <span> Drinking: {{preferences.drinking ? 'Yes' : 'No'}}</span>
         </md-card-content>
         <md-card-content>
-          <span> Wake Time: {{preferences.wakeTime}}</span>
+          <span> Wake Time: {{preferences.wakeTime | timeInputFilter}}</span>
         </md-card-content>
         <md-card-content>
-          <span>Sleep Time: {{preferences.sleepTime}}</span>
+          <span>Sleep Time: {{preferences.sleepTime | timeInputFilter}}</span>
         </md-card-content>
         <md-card-content>
           <span> Cleanliness: {{preferences.cleanliness}}/5</span>
