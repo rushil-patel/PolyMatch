@@ -72,6 +72,28 @@ app.directive('hobbyList', [function() {
    };
 }]);
 
+app.directive('scrollBottom', [function() {
+   return {
+      restrict: 'A',
+      link: function(scope, element, attr) {
+         element.on("click", function() {
+            console.log("click");
+            window.scrollTo(0, document.body.scrollHeight);
+         });
+      }
+   };
+}]);
+
+app.directive('errorList', [function() {
+   return {
+      restrict: 'E',
+      scope: {
+         errors: "="
+      },
+      templateUrl: 'Util/errorList.template.html'
+   };
+}]);
+
 // app.directive('cnvSummary', [function() {
 //    return {
 //       restrict: 'E',
