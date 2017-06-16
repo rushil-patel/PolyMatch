@@ -135,6 +135,8 @@
   <md-card-actions>
     <md-button class="md-primary md-raised" ng-show="!canUpdate" ng-click="savePreferences()">Save</md-button>
     <md-button class="md-primary md-raised" ng-show="canUpdate" ng-click="updatePreferences()">Update</md-button>
+    <md-button class="md-warn md-fab md-mini md-ink-ripple" ng-show="errors.length" scroll-bottom>V
+    </md-button>
   </md-card-actions>
 
    </md-card-content>
@@ -142,19 +144,4 @@
 
 </div>
 
-<div ng-show="errors.length">
-    <md-toolbar layout="row" style="background-color: indianred;">
-        <div class="md-toolbar-tools">
-          <span>Errors</span>
-        </div>
-    </md-toolbar>
-    <md-content>
-      <md-list flex>
-        <md-list-item class="md-1-line" ng-repeat="err in errors">
-          <div class="md-list-item-text" layout="column">
-            -{{err | tagError}}
-          </div>
-        </md-list-item>
-      </md-list>
-    </md-content>
-  </div>
+<error-list errors="errors"></error-list>

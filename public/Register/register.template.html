@@ -1,20 +1,5 @@
 <div>
-	<div ng-show="errors.length">
-		<md-toolbar layout="row" style="background-color: indianred;">
-				<div class="md-toolbar-tools">
-					<span>Errors</span>
-				</div>
-		</md-toolbar>
-		<md-content>
-			<md-list flex>
-				<md-list-item class="md-1-line" ng-repeat="err in errors">
-					<div class="md-list-item-text" layout="column">
-						-{{err | tagError}}
-					</div>
-				</md-list-item>
-			</md-list>
-		</md-content>
-	</div>
+	<error-list errors="errors"></error-list>
 	<form>
 		<div layout="row">
 			<md-input-container flex="50">

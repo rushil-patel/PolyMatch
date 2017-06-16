@@ -1,6 +1,8 @@
 app.controller('preferencesController',
- ['$q', '$scope', '$state', 'notifyDlg', 'login', 'api', '$filter', '$http', 'dormList', 'majorList', 'hobbyList', 'preferences', 'userHobbies',
- function($q, $scope, $state, nDlg, login, api, $filter, $http, dormList, majorList, hobbyList, preferences, userHobbies) {
+ ['$q', '$scope', '$state', 'login', 'api', '$filter', '$http', 'dormList', 
+  'majorList', 'hobbyList', 'preferences', 'userHobbies',
+ function($q, $scope, $state, login, api, $filter, $http, dormList, majorList, 
+  hobbyList, preferences, userHobbies) {
 
     //Initialization code
     $scope.errors = [];
@@ -26,12 +28,14 @@ app.controller('preferencesController',
       $scope.preferences = preferences[0];
       var index = 0, timeObject;
 
-      while (index < $scope.dormList.length && $scope.dormList[index].name !== preferences[0].dormName) {
+      while (index < $scope.dormList.length && 
+       $scope.dormList[index].name !== preferences[0].dormName) {
         index++;
       }
       $scope.selectedDorm = dormList[index];
       index = 0;
-      while (index < $scope.majorList.length && $scope.majorList[index].name !== preferences[0].major) {
+      while (index < $scope.majorList.length && 
+       $scope.majorList[index].name !== preferences[0].major) {
         index++;
       }
       $scope.selectedMajor = majorList[index];
@@ -123,8 +127,9 @@ app.controller('preferencesController',
 
    var reqErrorHandler = function(err) {
       console.log(err.data);
-      if (err.data)
+      if (err.data) {
         $scope.errors = err.data;
+      }
    };
 
    $scope.savePreferences = function() {
