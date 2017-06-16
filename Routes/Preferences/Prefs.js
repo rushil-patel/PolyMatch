@@ -187,7 +187,7 @@ router.put('/:usrId/Prefs', function(req, res) {
       matches.forEach(function(match) {
          var values = [match.score, match.newPerson, match.oldPerson];
          qrys += mysql.format("update Matches set score = ? where newPerson = ?"
-         + "and oldPerson = ?; ", values);
+         + " and oldPerson = ?; ", values);
        });
 
       cnn.chkQry(qrys, null, cb);
