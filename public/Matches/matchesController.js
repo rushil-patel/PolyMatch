@@ -62,7 +62,7 @@ app.controller('matchesController',
          query = "/Users/" + response.id + 
           "/Matches?" + $scope.extraQuery;
 
-        for (var filter in $scope.currentFilters) {
+         for (var filter in $scope.currentFilters) {
             query += " && " + $scope.currentFilters[filter].name + "=";
             if ($scope.currentFilters[filter].name === "firstName" ||
              $scope.currentFilters[filter].name === "lastName") {
