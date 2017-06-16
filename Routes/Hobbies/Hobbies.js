@@ -51,8 +51,10 @@ router.post('/:usrId/Hobbies', function(req, res) {
          hobbyFoundList = body.map(function(hobbyObj) {
             return hobbyObj.id;
          });
-         if (hobbyFoundList.length)
-            cnn.chkQry("select * from HobbyEnum where id in (?)", [hobbyFoundList], cb);
+         if (hobbyFoundList.length) {
+            cnn.chkQry("select * from HobbyEnum where id in (?)", 
+             [hobbyFoundList], cb);
+         }
          else {
             emptyBody = true;
             cb(emptyBody);
@@ -60,13 +62,16 @@ router.post('/:usrId/Hobbies', function(req, res) {
       }
    },
    function(hobby, fields, cb) {
-      if (vld.check(hobby.length == body.length, Tags.notFound, ["hobby"], cb)) {
-         cnn.chkQry("select * from Hobbies where userId = ? and hobbyId in (?)", [user, hobbyFoundList], cb);
+      if (vld.check(hobby.length == body.length, 
+       Tags.notFound, ["hobby"], cb)) {
+         cnn.chkQry("select * from Hobbies where userId = ? and hobbyId in (?)", 
+          [user, hobbyFoundList], cb);
       }
    },
    function(results, fields, cb) {
       console.log(results[0]);
-      if (vld.check(!results.length, Tags.dupHobby, ["Hobby already associated with User"], cb)) {
+      if (vld.check(!results.length, Tags.dupHobby, 
+       ["Hobby already associated with User"], cb)) {
          batch = body.map(function(hobbyObj) {
             return [user, hobbyObj.id];
          });

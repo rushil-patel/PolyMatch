@@ -14,4 +14,4 @@ router.get("/", function(req, res) {
    cnn.chkQry('select * from Dorms', null, cb)
 });
 
-module.exports = router
+module.exports = router;
