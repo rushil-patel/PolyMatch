@@ -27,7 +27,7 @@ function($http) {
              return response.data;
           })
           .catch(function(error) {
-             return [
+            return [
                 {
                    id: 1,
                    name: "Software Engineering"

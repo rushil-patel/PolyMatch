@@ -19,6 +19,6 @@ app.factory("notifyDlg", ["$mdDialog", function(mdD) {
              .ok('OK').cancel('Cancel');
          }
          return mdD.show(dialogBox);
-      },
+      }
    };
 }]);

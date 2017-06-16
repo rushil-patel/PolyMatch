@@ -1,6 +1,7 @@
 app.controller('profileController',
- ['$scope', '$state', '$http', 'login', 'notifyDlg', 'user', 'preferences', 'hobbies',
-   function($scope, $state, $http, login, nDlg, user, preferences, hobbies) {
+ ['$scope', '$state', '$http', 'login', 'notifyDlg', 'user', 'preferences',
+ 'hobbies',
+ function($scope, $state, $http, login, nDlg, user, preferences, hobbies) {
    	$scope.user = user[0];
       $scope.prevUser = Object.assign({}, user[0]);
    	$scope.preferences = preferences[0];

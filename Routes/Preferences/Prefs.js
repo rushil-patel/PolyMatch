@@ -117,17 +117,22 @@ router.put('/:usrId/Prefs', function(req, res) {
    var vld = req.validator;
    var body = req.body;
 
-   var requiredFields = ["dormName", "major", "gradesRatio", "quiet", "greekLife",
-    "smoking", "drinking", "wakeTime", "sleepTime", "cleanliness"];
+   var requiredFields = ["dormName", "major", "gradesRatio", "quiet", 
+    "greekLife", "smoking", "drinking", "wakeTime", "sleepTime", "cleanliness"];
 
    async.waterfall([
    function(cb) {
-      if (vld.checkPrsOK(user, cb) && vld.hasOnlyFields(body, requiredFields, cb) &&
+      if (vld.checkPrsOK(user, cb) && 
+       vld.hasOnlyFields(body, requiredFields, cb) &&
        vld.hasFields(body, Object.keys(body), cb) &&
-       vld.chain(!body.wakeTime || body.wakeTime < 24 && body.wakeTime > -1, Tags.badValue, ["wakeTime"])
-       .chain(!body.sleepTime || body.sleepTime < 24 && body.wakeTime > -1, Tags.badValue, ["sleepTime"])
-       .check(!body.gradesRatio || body.gradesRatio < 101 && body.gradesRatio > -1, Tags.badValue, ["gradesRatio"], cb)) {
-         cnn.chkQry('update Preferences P set ? where P.userId = ?', [body, user], cb);
+       vld.chain(!body.wakeTime || body.wakeTime < 24 && body.wakeTime > -1, 
+       Tags.badValue, ["wakeTime"])
+       .chain(!body.sleepTime || body.sleepTime < 24 && body.wakeTime > -1, 
+       Tags.badValue, ["sleepTime"])
+       .check(!body.gradesRatio || body.gradesRatio < 101 && 
+       body.gradesRatio > -1, Tags.badValue, ["gradesRatio"], cb)) {
+         cnn.chkQry('update Preferences P set ? where P.userId = ?', 
+          [body, user], cb);
       }
    },
    function(insertResult, fields, cb) {
@@ -181,8 +186,8 @@ router.put('/:usrId/Prefs', function(req, res) {
       var qrys = ""
       matches.forEach(function(match) {
          var values = [match.score, match.newPerson, match.oldPerson];
-         qrys += mysql.format("update Matches set score = ? where newPerson = ? and " +
-          "oldPerson = ?; ", values);
+         qrys += mysql.format("update Matches set score = ? where newPerson = ?"
+         + "and oldPerson = ?; ", values);
        });
 
       cnn.chkQry(qrys, null, cb);

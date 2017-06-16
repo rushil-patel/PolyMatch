@@ -94,16 +94,3 @@ app.directive('errorList', [function() {
    };
 }]);
 
-// app.directive('cnvSummary', [function() {
-//    return {
-//       restrict: 'E',
-//       scope: {
-//          user: "=user",
-//          cnvNum: "=index",
-//          cnv: "=toSummarize",
-//          editCnv: "&editCnv",
-//          delCnv: "&delCnv"
-//       },
-//       templateUrl: 'Conversation/cnvSummary.template.html'
-//    };
-// }]);
