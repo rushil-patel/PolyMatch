@@ -46,9 +46,6 @@
     <md-nav-item ng-if="isLoggedIn()" md-nav-sref="preferences" name="preferences">
       Preferences
     </md-nav-item>
-    <md-nav-item ng-if="isLoggedIn()" md-nav-click="logout()" name="logout">
-      Logout
-    </md-nav-item>
     <md-nav-item ng-if="isLoggedIn()" md-nav-sref="matches" name="matches">
       My Matches
     </md-nav-item>
@@ -57,6 +54,10 @@
     </md-nav-item>
     <md-nav-item ng-if="isLoggedIn()" md-nav-sref="archivedMatches" name="archivedMatches">
       Archived Matches
+    </md-nav-item>
+    <span flex></span>
+    <md-nav-item ng-if="isLoggedIn()" md-nav-click="logout()" name="logout">
+      Logout
     </md-nav-item>
   </md-nav-bar>
    <ui-view/>
