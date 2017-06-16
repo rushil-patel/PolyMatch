@@ -118,10 +118,10 @@
      </md-radio-group>
   </md-card-content>
 
-  <span>Hobbies</span>
+  <span>Hobbies and Interests</span>
   <md-card-content>
     <md-chips ng-model="userHobbies" md-autocomplete-snap md-transform-chip="transformChip($chip, $index)" md-on-remove="exitChip($chip, $index)">
-      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in queryHobby(searchText)" md-item-text="item.name" placeholder="Add some hobbies">
+      <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in queryHobby(searchText)" md-item-text="item.name" placeholder="Enter some hobbies">
         <span md-highlight-text="searchText">{{item.name}}</span>
       </md-autocomplete>
       <md-chip-template>

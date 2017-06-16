@@ -1,29 +1,27 @@
 app.controller('preferencesController',
  ['$q', '$scope', '$state', 'login', 'api', '$filter', '$http', 'dormList', 
-  'majorList', 'hobbyList', 'preferences', 'userHobbies',
+ 'majorList', 'hobbyList', 'preferences', 'userHobbies',
  function($q, $scope, $state, login, api, $filter, $http, dormList, majorList, 
-  hobbyList, preferences, userHobbies) {
+ hobbyList, preferences, userHobbies) {
 
     //Initialization code
-    $scope.errors = [];
+   $scope.errors = [];
 
-    $scope.dormList = dormList;
-    $scope.dormSearch = "";
-    //attach to preference
-    //$scope.preferences.dorm = {id: 1, name: "test"};
+   $scope.dormList = dormList;
+   $scope.dormSearch = "";
+   //attach to preference
 
-    $scope.majorList = majorList;
-    $scope.majorSearch = "";
-    //attach to preference
-    //$scope.preferences.major = {};
+   $scope.majorList = majorList;
+   $scope.majorSearch = "";
+   //attach to preference
 
-    //Hobby Chips
-    $scope.selectedItem = null;
-    $scope.searchText = null;
-    $scope.hobbyList = hobbyList;
-    $scope.newUserHobbies = [];
+   //Hobby Chips
+   $scope.selectedItem = null;
+   $scope.searchText = null;
+   $scope.hobbyList = hobbyList;
+   $scope.newUserHobbies = [];
 
-    if (preferences.length) {
+   if (preferences.length) {
       $scope.canUpdate = true;
       $scope.preferences = preferences[0];
       var index = 0, timeDisplay;
@@ -52,8 +50,8 @@ app.controller('preferencesController',
 
       $scope.userHobbies = userHobbies;
 
-    }
-    else {
+   }
+   else {
       $scope.preferences = {};
       $scope.canUpdate = false;
       $scope.preferences.quiet = false;
@@ -62,14 +60,14 @@ app.controller('preferencesController',
       $scope.preferences.drinking = false;
       $scope.preferences.gradesRatio = 50;
       $scope.userHobbies = [];
-    }
+   }
 
 
-    $scope.gradesRatioUpdate = function() {
+   $scope.gradesRatioUpdate = function() {
       $scope.socialRatio = 100 - $scope.preferences.gradesRatio;
    };
-    $scope.socialRatio = 100 - $scope.preferences.gradesRatio;
-    $scope.socialRatioUpdate = function() {
+   $scope.socialRatio = 100 - $scope.preferences.gradesRatio;
+   $scope.socialRatioUpdate = function() {
       $scope.preferences.gradesRatio = 100 - $scope.socialRatio;
    };
 
@@ -78,8 +76,6 @@ app.controller('preferencesController',
 
    var normalizeInput = function() {
       var reqPrefs = Object.assign({}, $scope.preferences);
-      //var user = login.getUser().then(function(user) { return user.id});;
-      //var newHobbies, existingHobbies;
 
       delete reqPrefs.id;
       delete reqPrefs.userId;
@@ -93,9 +89,13 @@ app.controller('preferencesController',
       else
         delete reqPrefs.major;
 
-      reqPrefs.wakeTime = $filter('timeOutputFilter')($scope.preferences.wakeTime, $scope.wakeMeridien);
+      reqPrefs.wakeTime = 
+       $filter('timeOutputFilter')($scope.preferences.wakeTime, 
+       $scope.wakeMeridien);
 
-      reqPrefs.sleepTime = $filter('timeOutputFilter')($scope.preferences.sleepTime, $scope.sleepMeridien);
+      reqPrefs.sleepTime = 
+       $filter('timeOutputFilter')($scope.preferences.sleepTime, 
+       $scope.sleepMeridien);
 
       return reqPrefs;
    };
@@ -115,9 +115,10 @@ app.controller('preferencesController',
 
    var updateHobbiesForUser = function(response) {
       var newUserHobbies = $scope.newUserHobbies;
+
       return login.getUser().then(function(user) {
          var user = user.id;
-
+         console.log("USER: " + user);
          newUserHobbies = newUserHobbies.concat(response.data);
          return $http.post('/Users/' + user + '/Hobbies', newUserHobbies);
       });
@@ -137,9 +138,13 @@ app.controller('preferencesController',
    $scope.savePreferences = function() {
 
       login.getUser().then(function(user) {
-         var user = user.id
+         var user = user.id;
          postNewHobbies().then(updateHobbiesForUser)
          .then(function(response) {
+            return $http.get('/Users/' + user + '/Hobbies');
+         })
+         .then(function(response) {
+            $scope.userHobbies = response.data;
             $scope.newUserHobbies = [];
          })
          .then(function(response) {
@@ -150,10 +155,6 @@ app.controller('preferencesController',
          })
          .catch(reqErrorHandler);
       });
-   };
-
-   var refreshHobbies = function() {
-      return $http.get('/Hobbies');
    };
 
    $scope.updatePreferences = function() {
@@ -172,7 +173,7 @@ app.controller('preferencesController',
             $scope.userHobbies = response.data;
             $scope.newUserHobbies = [];
          })
-         .then(refreshHobbies).then(clearErrorsOnSuccess).catch(reqErrorHandler);
+         .then(clearErrorsOnSuccess).catch(reqErrorHandler);
       });
    }
 
@@ -202,13 +203,13 @@ app.controller('preferencesController',
       }
       else {
         createChip = {id: -1, name: chip};
-        //$scope.userHobbies.push(createChip);
         return createChip;
       }
    };
 
    $scope.queryHobby = function(search) {
-      var results = search ? this.hobbyList.filter(this.createFilterFor(search)) : [];
+      var results = search ? 
+       this.hobbyList.filter(this.createFilterFor(search)) : [];
       return results;
    };
 
